@@ -194,7 +194,8 @@ CHECK_PRINTF_STR(1, 2) zstring printz(const char* str, ...){
     va_start(args, str);
     int n = vsnprintf(result.data, sizeof(result.data) * result.length, str, args);
     va_end(args);
-    printf(result.data);
+    result.length = lenOfStr(result.data);
+    printf("'%s' of len %d" , result.data, result.length);
     result.length = lenOfStr(result.data);
     return result;
 }

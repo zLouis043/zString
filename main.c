@@ -11,6 +11,7 @@ int main(int argc, char *argv[]){
     zstring copiedString = newZString("");
     zstring removedCharString = newZString("");
     zstring reversedString = newZString("");
+    zstring printedString = newZString("");
     
     size_t occurances = 0;
     size_t numOfWords = 0;
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]){
     numOfWords = numberOfWords(str);
     printf("In this string there are %zu words\n\n", numOfWords);
 
-    zstring printedString = printz("Hello there %s!", "Hi ciao");
+    printedString = printz("Hello there %s!", toRemove);
     printf("\nString: '%s' of len %zu\n\n", printedString.data, printedString.length);
 
     return 0;
