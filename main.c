@@ -45,5 +45,8 @@ int main(int argc, char *argv[]){
     numOfWords = numberOfWords(str);
     printf("In this string there are %zu words\n\n", numOfWords);
 
+    zstring printedString = printz("Hello there %s!", "Hi ciao");
+    printf("\nString: '%s' of len %zu\n\n", printedString.data, printedString.length);
+
     return 0;
 }

@@ -4,6 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdarg.h>
+
+#if defined(__GNUC__) || defined(__clang__)
+#define CHECK_PRINTF_STR(a, b) __attribute__ ((format (printf, a, b)))
+#else
+#define CHECK_PRINTF_STR(...)
+#endif
 
 typedef struct zstring{
     char *data;
@@ -14,7 +21,6 @@ typedef enum{
     False = 0,
     True
 }Bool;
-
 
 size_t lenOfStr(const char* str);
 size_t findOccuranceOf(zstring str, char toFind);
@@ -31,6 +37,7 @@ Bool isaNewLine(char c);
 Bool isWordInString(zstring str, char* word, int start);
 Bool compareString(zstring str1, zstring str2);
 zstring newZString(const char* str);
+zstring printz(const char* str, ...);
 zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
@@ -177,6 +184,17 @@ zstring newZString(const char* str){
         i++;
     }
     result.data[i] = '\0';
+    result.length = lenOfStr(result.data);
+    return result;
+}
+
+CHECK_PRINTF_STR(1, 2) zstring printz(const char* str, ...){
+    zstring result = newZString(str);
+    va_list args;
+    va_start(args, str);
+    int n = vsnprintf(result.data, sizeof(result.data) * result.length, str, args);
+    va_end(args);
+    printf(result.data);
     result.length = lenOfStr(result.data);
     return result;
 }
