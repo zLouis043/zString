@@ -7,5 +7,6 @@
         "occures",
         "ustr",
         "ZSTRING"
-    ]
+    ],
+    "cmake.configureOnOpen": false
 }
