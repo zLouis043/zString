@@ -1,5 +1,5 @@
-D:/STRINGLIB/bin/CMakeFiles/zstring.dir
-D:/STRINGLIB/bin/CMakeFiles/edit_cache.dir
-D:/STRINGLIB/bin/CMakeFiles/rebuild_cache.dir
-D:/STRINGLIB/bin/src/CMakeFiles/edit_cache.dir
-D:/STRINGLIB/bin/src/CMakeFiles/rebuild_cache.dir
+D:/zString/bin/CMakeFiles/zstring.dir
+D:/zString/bin/CMakeFiles/edit_cache.dir
+D:/zString/bin/CMakeFiles/rebuild_cache.dir
+D:/zString/bin/src/CMakeFiles/edit_cache.dir
+D:/zString/bin/src/CMakeFiles/rebuild_cache.dir

@@ -53,10 +53,10 @@ RM = D:\CMAKE\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\STRINGLIB
+CMAKE_SOURCE_DIR = D:\zString
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\STRINGLIB\bin
+CMAKE_BINARY_DIR = D:\zString\bin
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -97,14 +97,14 @@ src/clean:
 CMakeFiles/zstring.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\zstring.dir\build.make CMakeFiles/zstring.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\zstring.dir\build.make CMakeFiles/zstring.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:\STRINGLIB\bin\CMakeFiles --progress-num=1,2 "Built target zstring"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:\zString\bin\CMakeFiles --progress-num=1,2 "Built target zstring"
 .PHONY : CMakeFiles/zstring.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/zstring.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\STRINGLIB\bin\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\zString\bin\CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/zstring.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\STRINGLIB\bin\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\zString\bin\CMakeFiles 0
 .PHONY : CMakeFiles/zstring.dir/rule
 
 # Convenience name for target.

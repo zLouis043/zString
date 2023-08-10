@@ -1,3 +1,0 @@
-D:\CMAKE\bin\cmake.exe -E rm -f CMakeFiles\zstringlib.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\zstringlib.dir/objects.a @CMakeFiles\zstringlib.dir\objects1.rsp
-C:\msys64\mingw64\bin\cc.exe -Wl,--whole-archive CMakeFiles\zstringlib.dir/objects.a -Wl,--no-whole-archive -o zstringlib.exe -Wl,--out-implib,libzstringlib.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\zstringlib.dir\linkLibs.rsp
