@@ -89,18 +89,11 @@ char toupperCase(char c){
 }
 
 Bool isaDigit(char c){
-    c = toLowerCase(c);
-    if(c >= 'a' && c <= 'z'){
-        return True;
-    }
-    return False;
+    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
 Bool isaNumber(char c){
-    if(c >= '1' && c <= '9'){
-        return True;
-    }
-    return False;
+    return (c >= '1' && c <= '9');
 }
 
 Bool isaSpace(char c){
@@ -108,10 +101,7 @@ Bool isaSpace(char c){
 }
 
 Bool isaSymbol(char c){
-    if(!isaDigit(c) && !isaNumber(c) && !isaSpace(c)){
-        return True;
-    }
-    return False;
+    return (!isaDigit(c) && !isaNumber(c) && !isaSpace(c));
 }
 
 Bool isWordInString(zstring str, char* word, int start){
