@@ -6,12 +6,6 @@
 #include <stddef.h>
 #include <stdarg.h>
 
-#if defined(__GNUC__) || defined(__clang__)
-#define CHECK_PRINTF_STR(a, b) __attribute__ ((format (printf, a, b)))
-#else
-#define CHECK_PRINTF_STR(...)
-#endif
-
 typedef struct zstring{
     char *data;
     size_t length;
@@ -45,6 +39,7 @@ zstring removeWord(zstring str, char* word);
 zstring removeChar(zstring str, char c);
 zstring copyStr(zstring str);
 zstring reverseStr(zstring str);
+zstring concatenateStr(zstring str1, zstring str2);
 
 #endif // ZSTRING_H_
 
@@ -188,14 +183,14 @@ zstring newZString(const char* str){
     return result;
 }
 
-CHECK_PRINTF_STR(1, 2) zstring printz(const char* str, ...){
+zstring printz(const char* str, ...){
     zstring result = newZString(str);
     va_list args;
     va_start(args, str);
     int n = vsnprintf(result.data, sizeof(result.data) * result.length, str, args);
     va_end(args);
     result.length = lenOfStr(result.data);
-    printf("'%s' of len %d" , result.data, result.length);
+    printf("String: '%s' of len %zu\n\n" , result.data, result.length);
     result.length = lenOfStr(result.data);
     return result;
 }
@@ -295,6 +290,24 @@ zstring reverseStr(zstring str){
     }
     result.data[i] = '\0';
     result.length = lenOfStr(result.data);
+    return result;
+}
+
+zstring concatenateStr(zstring str1, zstring str2){
+    zstring result = newZString(str1.data);
+    result.length = str1.length + str2.length;
+    size_t i = 0; 
+    size_t j = 0;
+    while(!isaTerminator(str1.data[i])){
+        result.data[i] = str1.data[i];
+        i++;
+    }
+    while(!isaTerminator(str2.data[j])){
+        result.data[i] = str2.data[j];
+        i++;
+        j++;
+    }
+    result.data[i] = '\0';
     return result;
 }
 

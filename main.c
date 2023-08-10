@@ -5,13 +5,14 @@
 
 int main(int argc, char *argv[]){
 
-    zstring str = newZString("Hello, World! New String Library 2019");
+    zstring str = newZString("Hello, World! New String Library 2023");
     zstring trimmedString = newZString("");
     zstring removedWordString = newZString("");
     zstring copiedString = newZString("");
     zstring removedCharString = newZString("");
     zstring reversedString = newZString("");
     zstring printedString = newZString("");
+    zstring concatenatedString = newZString("");
     
     size_t occurances = 0;
     size_t numOfWords = 0;
@@ -47,7 +48,9 @@ int main(int argc, char *argv[]){
     printf("In this string there are %zu words\n\n", numOfWords);
 
     printedString = printz("Hello there %s!", toRemove);
-    printf("\nString: '%s' of len %zu\n\n", printedString.data, printedString.length);
+
+    concatenatedString = concatenateStr(str, printedString);
+    printf("Concatenated string: %s of len: %zu\n\n", concatenatedString.data, concatenatedString.length); 
 
     return 0;
 }
