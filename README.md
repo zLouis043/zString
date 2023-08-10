@@ -1,7 +1,7 @@
 # zString 
 Simple and beginner-friendly header-only string library useful for the ones who have just started learning C language or for those that want to use an essential string library for their projects.
 
-# How-To
+## How-To
 Just add the zstring.h file to your project's headers and the include and define its IMPLEMENTATION 
 
 ```c
