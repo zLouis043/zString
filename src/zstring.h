@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 typedef struct zstring{
     char *data;
-    int length;
+    size_t length;
 }zstring;
 
 typedef enum{
@@ -15,11 +16,15 @@ typedef enum{
 }Bool;
 
 
-int lenOfStr(const char* str);
-int findOccuranceOf(zstring str, char toFind);
-int findStartOfWord(zstring str, char* word);
+size_t  lenOfStr(const char* str);
+size_t  findOccuranceOf(zstring str, char toFind);
+size_t  findStartOfWord(zstring str, char* word);
 char toLowerCase(char c);
 char toupperCase(char c);
+Bool isaDigit(char c);
+Bool isaNumber(char c);
+Bool isaSpace(char c);
+Bool isaSymbol(char c);
 Bool isWordInString(zstring str, char* word, int start);
 Bool compareString(zstring str1, zstring str2);
 zstring newZString(const char* str);
@@ -35,17 +40,17 @@ zstring reverseStr(zstring str);
 
 #ifndef ZSTRING_IMPLEMENTATION
 
-int lenOfStr(const char* str){
-    int len = 0;
+size_t  lenOfStr(const char* str){
+    size_t  len = 0;
     while(str[len] != '\0'){
         len++;
     }
     return len;
 }
 
-int findOccuranceOf(zstring str, char toFind){
-    int occurences = 0;
-    int i = 0;
+size_t  findOccuranceOf(zstring str, char toFind){
+    size_t  occurences = 0;
+    size_t  i = 0;
     printf("String to Lower : '%s'\n", toLowercaseStr(str).data);
     while(toLowercaseStr(str).data[i] != '\0'){
         if(toLowercaseStr(str).data[i] == toLowerCase(toFind)){
@@ -56,8 +61,8 @@ int findOccuranceOf(zstring str, char toFind){
     return occurences;
 }
 
-int findStartOfWord(zstring str, char* word){
-    int i = 0; int j = 0; int k = 0;
+size_t  findStartOfWord(zstring str, char* word){
+    size_t  i = 0; 
     zstring result = newZString("");
     while(str.data[i] != '\0'){
         if(str.data[i] == word[0]){
@@ -83,8 +88,34 @@ char toupperCase(char c){
     return c;
 }
 
+Bool isaDigit(char c){
+    c = toLowerCase(c);
+    if(c >= 'a' && c <= 'z'){
+        return True;
+    }
+    return False;
+}
+
+Bool isaNumber(char c){
+    if(c >= '1' && c <= '9'){
+        return True;
+    }
+    return False;
+}
+
+Bool isaSpace(char c){
+    return (c == ' ');
+}
+
+Bool isaSymbol(char c){
+    if(!isaDigit(c) && !isaNumber(c) && !isaSpace(c)){
+        return True;
+    }
+    return False;
+}
+
 Bool isWordInString(zstring str, char* word, int start){
-    int i = 0; int j = 1;
+    size_t  i = 0; size_t  j = 1;
     while(word[j] != '\0'){
         if(word[j] != str.data[start+i+1]){
             return False;
@@ -100,7 +131,7 @@ Bool compareString(zstring str1, zstring str2){
         return False;
     }
 
-    int i = 0; 
+    size_t  i = 0; 
     while(str1.data[i] != '\0'){
         if(str1.data[i] != str2.data[i]){
             return False;
@@ -114,7 +145,7 @@ Bool compareString(zstring str1, zstring str2){
 zstring newZString(const char* str){
     zstring result;
     result.data = malloc(lenOfStr(str));
-    int i = 0;
+    size_t  i = 0;
     while(str[i]  != '\0'){
         result.data[i] = str[i];
         i++;
@@ -124,7 +155,7 @@ zstring newZString(const char* str){
 }
 
 zstring toLowercaseStr(zstring str){
-    int i = 0; 
+    size_t  i = 0; 
     zstring lstr = newZString("");
     while(str.data[i] != '\0'){
         if(str.data[i] >= 'A' && str.data[i] <= 'Z'){
@@ -139,7 +170,7 @@ zstring toLowercaseStr(zstring str){
 }
 
 zstring toUppercaseStr(zstring str){
-    int i = 0; 
+    size_t  i = 0; 
     zstring ustr = newZString("");
     while(str.data[i] != '\0'){
         if(str.data[i] >= 'A' && str.data[i] <= 'Z'){
@@ -155,10 +186,10 @@ zstring toUppercaseStr(zstring str){
 
 zstring trimStr(zstring str){
     zstring result = newZString("");
-    int i = 0; 
-    int j = 0; 
+    size_t  i = 0; 
+    size_t  j = 0; 
     while(str.data[i] != '\0'){
-        if(str.data[i] != ' '){
+        if(!isaSpace(str.data[i])){
             result.data[j++] = str.data[i];
         }
         i++;
@@ -169,7 +200,7 @@ zstring trimStr(zstring str){
 }
 
 zstring removeWord(zstring str, char* word){
-    int i = 0; int j = 0;
+    size_t  i = 0; int j = 0;
     zstring result = newZString("");
     while(str.data[i] != '\0'){
         if(str.data[i] == word[0]){
@@ -188,8 +219,8 @@ zstring removeWord(zstring str, char* word){
 
 zstring removeChar(zstring str, char c){
     zstring result = newZString("");
-    int i = 0; 
-    int j = 0; 
+    size_t  i = 0; 
+    size_t  j = 0; 
     while(str.data[i] != '\0'){
         if(str.data[i] != c){
             result.data[j++] = str.data[i];
@@ -208,7 +239,7 @@ zstring copyStr(zstring str){
 }
 
 zstring reverseStr(zstring str){
-    int i = 0;
+    size_t i = 0;
     zstring result = newZString("");
     while(str.data[i] != '\0'){
         result.data[i] = str.data[str.length - i - 1];
