@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
 
     concatenatedString = concatenateStr(str, printedString);
     printf("Concatenated string: %s of len: %zu\n\n", concatenatedString.data, concatenatedString.length); 
-
+    
     freeZString(concatenatedString);
 
     return 0;
