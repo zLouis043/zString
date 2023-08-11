@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "src/zstring.h"
 #define ZSTRING_IMPLEMENTATION
+#include "src/zstring.h"
 
 int main(int argc, char *argv[]){
 

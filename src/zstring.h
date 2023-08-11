@@ -46,7 +46,7 @@ zstring concatenateStr(zstring str1, zstring str2);
 
 #endif // ZSTRING_H_
 
-#ifndef ZSTRING_IMPLEMENTATION
+#ifdef ZSTRING_IMPLEMENTATION
 
 //TODO: improve this function
 void freeZString(zstring str){
