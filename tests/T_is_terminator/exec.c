@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
     
-    printf("%c",isaTerminator('\n'));    
+    printf("%d",isaTerminator('\0'));    
     
 
     return 0;

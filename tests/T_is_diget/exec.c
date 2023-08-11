@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
     
-    printf("%c",isaDigit('s'));    
+    printf("%d",isaDigit('s'));    
     
 
     return 0;

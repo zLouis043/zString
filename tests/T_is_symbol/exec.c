@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
     
-    printf("%c",isaSymbol('$'));    
+    printf("%d",isaSymbol('$'));    
     
 
     return 0;

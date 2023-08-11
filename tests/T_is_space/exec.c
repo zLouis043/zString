@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
     
-    printf("%c",isaSpace(' '));    
+    printf("%d",isaSpace(' '));    
     
 
     return 0;
