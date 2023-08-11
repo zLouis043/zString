@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]){
 
     zstring str = newZString(" HELLOW, WORLD! ");
-    zstring separated = sub_str(str,0,4);
+    zstring separated = removeWord(str,"WORLD");
     printf("%s\n",separated.data);
 
     return 0;

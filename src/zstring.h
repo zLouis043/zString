@@ -292,6 +292,7 @@ Remove a word from a string
 zstring sub_str(zstring str,int start, int end){
     zstring  new_string = {0};
     new_string.data = malloc((end - start) + 1);
+    new_string.length = end - start;
     int position = 0;
     for(int i = start; i < end; i++){
         new_string.data[position] = str.data[i];
@@ -306,16 +307,28 @@ zstring removeWord(zstring str, char* word){
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
     zstring base = newZString(word);
+
     while(!isaTerminator(str.data[i])){
         
+
         //making the comparation
-    
+        if((i + base.length) < str.length){
+            zstring possible = sub_str(str,i,i+base.length);
+            if(compareString(possible,base)){
+                i+=base.length;
+                freeZString(possible);
+                continue;
+            }
+            freeZString(possible);
+        }
+
         result.data[j] = str.data[i]; // copy every character of the string except the word we do not want 
         i++;
         j++;
     }
     result.data[j] = '\0';
     result.length = lenOfStr(result.data);
+    freeZString(base);
     return result;
 }
 
