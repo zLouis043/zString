@@ -377,17 +377,17 @@ Concatenates two string
 zstring concatenateStr(zstring str1, zstring str2){
     zstring result = newZString(str1.data);
     result.length = str1.length + str2.length;
+    result.data = realloc(result.data,result.length +1)
+
     size_t i = 0; 
-    size_t j = 0;
-    while(!isaTerminator(str1.data[i])){
-        result.data[i] = str1.data[i];      //copy the first part of the string with the first one 
-        i++;
-    }
-    while(!isaTerminator(str2.data[j])){
-        result.data[i] = str2.data[j];      //and then copy the second part of the string with the second one 
+    size_t j = str1.length;
+  
+    while(!isaTerminator(str2.data[i])){
+        result.data[j] = str2.data[i];      //and then copy the second part of the string with the second one 
         i++;
         j++;
     }
+    
     result.data[i] = '\0';
     return result;
 }
