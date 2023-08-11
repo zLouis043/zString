@@ -230,9 +230,10 @@ Create and print a new string that contains all the arguments defined in itself
 */
 zstring printz(const char* str, ...){
     zstring result = newZString(str);
+    result.data = realloc(result.data,result.length +100);
     va_list args;
     va_start(args, str);
-    int n = vsnprintf(result.data, sizeof(result.data) * result.length, str, args);
+    int n = vsnprintf(result.data, sizeof(char *) * result.length, str, args);
     va_end(args);
     result.length = lenOfStr(result.data);
     printf("String: '%s' of len %zu\n\n" , result.data, result.length);
