@@ -16,8 +16,8 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ```c
 
-#include "zstring.h"
 #define ZSTRING_IMPLEMENTATION
+#include "zstring.h"
 
 ```
  
