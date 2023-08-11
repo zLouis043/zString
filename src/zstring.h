@@ -377,7 +377,7 @@ Concatenates two string
 zstring concatenateStr(zstring str1, zstring str2){
     zstring result = newZString(str1.data);
     result.length = str1.length + str2.length;
-    result.data = realloc(result.data,result.length +1)
+    result.data = realloc(result.data,result.length +1);
 
     size_t i = 0; 
     size_t j = str1.length;
@@ -387,8 +387,8 @@ zstring concatenateStr(zstring str1, zstring str2){
         i++;
         j++;
     }
-    
-    result.data[i] = '\0';
+
+    result.data[j] = '\0';
     return result;
 }
 
