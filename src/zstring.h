@@ -275,13 +275,16 @@ zstring toUppercaseStr(zstring str){
 This function returns the string without any spaces 
 */
 zstring trimStr(zstring str){
-    zstring result = newZString(str.data);
+    zstring result = {0};
+    result.data = malloc(str.length+1);
     size_t i = 0; 
     size_t j = 0; 
     while(!isaTerminator(str.data[i])){
         if(isaSpace(str.data[i])){
             i++;                // scroll the string while the are spaces 
+            continue;
         }
+
         result.data[j++] = str.data[i]; // copy every character to result string that is not a space 
         i++;
     }
