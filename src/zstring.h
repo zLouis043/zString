@@ -52,7 +52,8 @@ zstring concatenateStr(zstring str1, zstring str2);
 void freeZString(zstring str){
     if(str.data == NULL) return;
     str.length = 0;
-    str.data[0] = '\0';
+    free(str.data);
+
 }
 
 /*
@@ -200,7 +201,7 @@ Create a new string with its data and its length
 */
 zstring newZString(const char* str){
     zstring result;
-    result.data = malloc(lenOfStr(str));    //allocate memory for the string
+    result.data = malloc(lenOfStr(str) +1);    //allocate memory for the string
 
     if(result.data == NULL){    // checks if the malloc failed 
         printf("Could not allocate memory for the new ZString. Quitting.\n");
