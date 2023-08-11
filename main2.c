@@ -8,10 +8,8 @@
 int main(int argc, char *argv[]){
 
     zstring str = newZString(" HELLOW, WORLD! ");
-    zstring lower = toLowercaseStr(str);
-    printf("%s",lower.data);    
-    freeZString(lower);
-    freeZString(str);
+    zstring separated = sub_str(str,0,4);
+    printf("%s\n",separated.data);
 
     return 0;
 }

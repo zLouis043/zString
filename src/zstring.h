@@ -33,12 +33,15 @@ Bool isaTerminator(char c);
 Bool isaNewLine(char c);
 Bool isWordInString(zstring str, char* word, int start);
 Bool compareString(zstring str1, zstring str2);
+
 zstring newZString(const char* str);
 zstring printz(const char* str, ...);
 zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
 zstring removeWord(zstring str, char* word);
+zstring sub_str(zstring str,int start, int end);
+
 zstring removeChar(zstring str, char c);
 zstring copyStr(zstring str);
 zstring reverseStr(zstring str);
@@ -286,15 +289,27 @@ zstring trimStr(zstring str){
 /*
 Remove a word from a string
 */
+zstring sub_str(zstring str,int start, int end){
+    zstring  new_string = {0};
+    new_string.data = malloc((end - start) + 1);
+    int position = 0;
+    for(int i = start; i < end; i++){
+        new_string.data[position] = str.data[i];
+        position+=1;
+    }
+    new_string.data[position] = '\0';
+    return new_string;
+
+}
+
 zstring removeWord(zstring str, char* word){
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
+    zstring base = newZString(word);
     while(!isaTerminator(str.data[i])){
-        if(str.data[i] == word[0]){ // find the beginning of the word 
-            if(isWordInString(str, word, i)){   // check if it is actually the word that we are searching 
-                i += lenOfStr(word);    // shift the index of the string after the removed word 
-            }
-        }
+        
+        //making the comparation
+    
         result.data[j] = str.data[i]; // copy every character of the string except the word we do not want 
         i++;
         j++;
