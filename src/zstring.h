@@ -251,17 +251,18 @@ zstring toLowercaseStr(zstring str){
 
 zstring toUppercaseStr(zstring str){
     size_t i = 0; 
-    zstring ustr = newZString(str.data);
+    zstring lstr = newZString(str.data);
     while(!isaTerminator(str.data[i])){
-        if(str.data[i] >= 'a' && str.data[i] <= 'z'){
-            ustr.data[i] = str.data[i] + 32; // shift the character to an lower case character to a upper one 
-        }else {
-            ustr.data[i] = str.data[i];
+        if(str.data[i] >= 'a' && str.data[i] <= 'z' && !isaSpace(str.data[i]) && !isaNumber(str.data[i]) && !isaNewLine(str.data[i])){
+            lstr.data[i] = str.data[i] - 32; // shift the character to an upper case character to a lower one 
+        }else{
+            lstr.data[i] = str.data[i];
         }
         i++;
     }
-    ustr.data[i] = '\0';
-    return ustr;
+    lstr.data[i] = '\0';
+    lstr.length = lenOfStr(lstr.data);
+    return lstr;
 }
 /*
 This function returns the string without any spaces 
