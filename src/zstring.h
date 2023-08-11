@@ -35,7 +35,7 @@ Bool isWordInString(zstring str, char* word, int start);
 Bool compareString(zstring str1, zstring str2);
 
 zstring newZString(const char* str);
-zstring printz(const char* str, ...);
+zstring printz(int extra_space,const char* str, ...);
 zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
@@ -228,15 +228,17 @@ zstring newZString(const char* str){
 /*
 Create and print a new string that contains all the arguments defined in itself 
 */
-zstring printz(const char* str, ...){
+zstring printz(int extra_space, const char* str, ...){
     zstring result = newZString(str);
-    result.data = realloc(result.data,result.length +100);
     va_list args;
     va_start(args, str);
+    result.data = realloc(result.data,result.length +extra_space);
+    
+  
     int n = vsnprintf(result.data, sizeof(char *) * result.length, str, args);
     va_end(args);
     result.length = lenOfStr(result.data);
-    printf("String: '%s' of len %zu\n\n" , result.data, result.length);
+   // printf("String: '%s' of len %zu\n\n" , result.data, result.length);
     result.length = lenOfStr(result.data);
     return result;
 }
