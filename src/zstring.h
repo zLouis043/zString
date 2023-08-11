@@ -60,6 +60,9 @@ This function returns the number of characters inside of a string
 */
 size_t lenOfStr(const char* str){
     size_t len = 0;
+    
+    if(str == "") return 0;
+
     while(!isaTerminator(str[len])){ //While loop until str[len] == '\0' => isaTerminator(str[len)
         len++;
     }

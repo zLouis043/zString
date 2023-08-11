@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     size_t occurances = 0;
     size_t numOfWords = 0;
     char toFind = 'w';
-    char toRemove[] = "World";
+    char toRemove[] = "Hello, World";
     Bool areEqual = False;
 
     str.length = lenOfStr(str.data);
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
 
     concatenatedString = concatenateStr(str, printedString);
     printf("Concatenated string: %s of len: %zu\n\n", concatenatedString.data, concatenatedString.length); 
-    
+
     freeZString(concatenatedString);
 
     return 0;
