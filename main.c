@@ -37,7 +37,9 @@ int main(int argc, char *argv[]){
     size_t numOfWords = numberOfWords(str);
     printf("In this string there are %zu words\n\n", numOfWords);
 
-    zstring printedString = printz(100, "Hello there %s!", toRemove);
+    zstring printedString = printz(100, "Hello there %s!", "your formatation");
+
+    printf("printed string: %s\n\n",printedString.data);
 
     zstring concatenatedString = concatenateStr(str, printedString);
     printf("Concatenated string: %s of len: %zu\n\n", concatenatedString.data, concatenatedString.length); 
