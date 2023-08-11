@@ -253,7 +253,7 @@ zstring toUppercaseStr(zstring str){
     size_t i = 0; 
     zstring ustr = newZString(str.data);
     while(!isaTerminator(str.data[i])){
-        if(str.data[i] >= 'A' && str.data[i] <= 'Z'){
+        if(str.data[i] >= 'a' && str.data[i] <= 'z'){
             ustr.data[i] = str.data[i] + 32; // shift the character to an lower case character to a upper one 
         }else {
             ustr.data[i] = str.data[i];
