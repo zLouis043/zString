@@ -16,6 +16,7 @@ typedef enum{
     True
 }Bool;
 
+void freeZString(zstring str);
 size_t lenOfStr(const char* str);
 size_t findOccuranceOf(zstring str, char toFind);
 size_t findStartOfWord(zstring str, char* word);
@@ -44,6 +45,12 @@ zstring concatenateStr(zstring str1, zstring str2);
 #endif // ZSTRING_H_
 
 #ifndef ZSTRING_IMPLEMENTATION
+
+void freeZString(zstring str){
+    if(str.data == NULL) return;
+    str.length = 0;
+    str.data[0] = '\0';
+}
 
 size_t lenOfStr(const char* str){
     size_t len = 0;
