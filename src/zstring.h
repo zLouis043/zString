@@ -33,12 +33,15 @@ Bool isaTerminator(char c);
 Bool isaNewLine(char c);
 Bool isWordInString(zstring str, char* word, int start);
 Bool compareString(zstring str1, zstring str2);
+
 zstring newZString(const char* str);
-zstring printz(const char* str, ...);
+zstring printz(int extra_space,const char* str, ...);
 zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
 zstring removeWord(zstring str, char* word);
+zstring sub_str(zstring str,int start, int end);
+
 zstring removeChar(zstring str, char c);
 zstring copyStr(zstring str);
 zstring reverseStr(zstring str);
@@ -52,7 +55,8 @@ zstring concatenateStr(zstring str1, zstring str2);
 void freeZString(zstring str){
     if(str.data == NULL) return;
     str.length = 0;
-    str.data[0] = '\0';
+    free(str.data);
+
 }
 
 /*
@@ -85,6 +89,7 @@ size_t findOccuranceOf(zstring str, char toFind){
         }
         i++;
     }
+    freeZString(toLowCase);
     return occurences;
 }
 
@@ -117,6 +122,9 @@ size_t numberOfWords(zstring str){
     while(!isaTerminator(str.data[i])){
         while(isaSpace(str.data[i])){
             i++;                    // Scroll through the string while there are spaces 
+        }
+        if(i > str.length -1){
+            break;
         }
         if(!isaSpace(str.data[i]) && isaSpace(str.data[i+1])){
             n++;                    // If the next character is not a space then we have found a word
@@ -200,7 +208,7 @@ Create a new string with its data and its length
 */
 zstring newZString(const char* str){
     zstring result;
-    result.data = malloc(lenOfStr(str));    //allocate memory for the string
+    result.data = malloc(lenOfStr(str) +1);    //allocate memory for the string
 
     if(result.data == NULL){    // checks if the malloc failed 
         printf("Could not allocate memory for the new ZString. Quitting.\n");
@@ -220,14 +228,17 @@ zstring newZString(const char* str){
 /*
 Create and print a new string that contains all the arguments defined in itself 
 */
-zstring printz(const char* str, ...){
+zstring printz(int extra_space, const char* str, ...){
     zstring result = newZString(str);
     va_list args;
     va_start(args, str);
-    int n = vsnprintf(result.data, sizeof(result.data) * result.length, str, args);
+    result.data = realloc(result.data,result.length +extra_space);
+    
+  
+    int n = vsnprintf(result.data, sizeof(char *) * result.length, str, args);
     va_end(args);
     result.length = lenOfStr(result.data);
-    printf("String: '%s' of len %zu\n\n" , result.data, result.length);
+   // printf("String: '%s' of len %zu\n\n" , result.data, result.length);
     result.length = lenOfStr(result.data);
     return result;
 }
@@ -250,29 +261,33 @@ zstring toLowercaseStr(zstring str){
 
 zstring toUppercaseStr(zstring str){
     size_t i = 0; 
-    zstring ustr = newZString(str.data);
+    zstring lstr = newZString(str.data);
     while(!isaTerminator(str.data[i])){
-        if(str.data[i] >= 'A' && str.data[i] <= 'Z'){
-            ustr.data[i] = str.data[i] + 32; // shift the character to an lower case character to a upper one 
-        }else {
-            ustr.data[i] = str.data[i];
+        if(str.data[i] >= 'a' && str.data[i] <= 'z' && !isaSpace(str.data[i]) && !isaNumber(str.data[i]) && !isaNewLine(str.data[i])){
+            lstr.data[i] = str.data[i] - 32; // shift the character to an upper case character to a lower one 
+        }else{
+            lstr.data[i] = str.data[i];
         }
         i++;
     }
-    ustr.data[i] = '\0';
-    return ustr;
+    lstr.data[i] = '\0';
+    lstr.length = lenOfStr(lstr.data);
+    return lstr;
 }
 /*
 This function returns the string without any spaces 
 */
 zstring trimStr(zstring str){
-    zstring result = newZString(str.data);
+    zstring result = {0};
+    result.data = malloc(str.length+1);
     size_t i = 0; 
     size_t j = 0; 
     while(!isaTerminator(str.data[i])){
         if(isaSpace(str.data[i])){
             i++;                // scroll the string while the are spaces 
+            continue;
         }
+
         result.data[j++] = str.data[i]; // copy every character to result string that is not a space 
         i++;
     }
@@ -284,21 +299,46 @@ zstring trimStr(zstring str){
 /*
 Remove a word from a string
 */
+zstring sub_str(zstring str,int start, int end){
+    zstring  new_string = {0};
+    new_string.data = malloc((end - start) + 1);
+    new_string.length = end - start;
+    int position = 0;
+    for(int i = start; i < end; i++){
+        new_string.data[position] = str.data[i];
+        position+=1;
+    }
+    new_string.data[position] = '\0';
+    return new_string;
+
+}
+
 zstring removeWord(zstring str, char* word){
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
+    zstring base = newZString(word);
+
     while(!isaTerminator(str.data[i])){
-        if(str.data[i] == word[0]){ // find the beginning of the word 
-            if(isWordInString(str, word, i)){   // check if it is actually the word that we are searching 
-                i += lenOfStr(word);    // shift the index of the string after the removed word 
+        
+
+        //making the comparation
+        if((i + base.length) < str.length){
+            zstring possible = sub_str(str,i,i+base.length);
+            if(compareString(possible,base)){
+                i+=base.length;
+                freeZString(possible);
+                continue;
             }
+            freeZString(possible);
         }
+
         result.data[j] = str.data[i]; // copy every character of the string except the word we do not want 
         i++;
         j++;
     }
     result.data[j] = '\0';
     result.length = lenOfStr(result.data);
+    freeZString(base);
     return result;
 }
 
@@ -347,18 +387,18 @@ Concatenates two string
 zstring concatenateStr(zstring str1, zstring str2){
     zstring result = newZString(str1.data);
     result.length = str1.length + str2.length;
+    result.data = realloc(result.data,result.length +1);
+
     size_t i = 0; 
-    size_t j = 0;
-    while(!isaTerminator(str1.data[i])){
-        result.data[i] = str1.data[i];      //copy the first part of the string with the first one 
-        i++;
-    }
-    while(!isaTerminator(str2.data[j])){
-        result.data[i] = str2.data[j];      //and then copy the second part of the string with the second one 
+    size_t j = str1.length;
+  
+    while(!isaTerminator(str2.data[i])){
+        result.data[j] = str2.data[i];      //and then copy the second part of the string with the second one 
         i++;
         j++;
     }
-    result.data[i] = '\0';
+
+    result.data[j] = '\0';
     return result;
 }
 
