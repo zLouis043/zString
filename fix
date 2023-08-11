@@ -3,3 +3,4 @@
 //the upper function was not working (I fixed) 
 // the remove world was not working (I fixed)
 // the concatendStr was with alocations problems (I fixed)
+// the find ocurrence of was not cleaning the memory (I fixed)

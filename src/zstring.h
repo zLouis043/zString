@@ -89,6 +89,7 @@ size_t findOccuranceOf(zstring str, char toFind){
         }
         i++;
     }
+    freeZString(toLowCase);
     return occurences;
 }
 
