@@ -123,6 +123,9 @@ size_t numberOfWords(zstring str){
         while(isaSpace(str.data[i])){
             i++;                    // Scroll through the string while there are spaces 
         }
+        if(i > str.length -1){
+            break;
+        }
         if(!isaSpace(str.data[i]) && isaSpace(str.data[i+1])){
             n++;                    // If the next character is not a space then we have found a word
         }
