@@ -1,4 +1,4 @@
-//the allocation was not allocation the correct size
-//fix heal problemns on the free functions 
+//the allocation was not allocation the correct size (wass missing the null terminator space)
+//fix heap problemns on the free functions  
 //the upper function was not working (I fixed) 
 // the remove world was not working (I fixed)
