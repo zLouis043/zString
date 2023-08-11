@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
     zstring str = newZString(" hello world! ");
-    zstring removed = removeChar(str,'c');
+    zstring removed = removeChar(str,'h');
     printf("%s",removed.data);    
     freeZString(removed);
     freeZString(str);
