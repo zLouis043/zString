@@ -13,12 +13,17 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ## Test and functionalities 
 
+### How to setup the test file
+
 ```c
 
-cd bin 
+cd bin
+make 
 ./zstring <string> <function to test>
 
 ```
+
+### Functionalities 
 
 * Trim a string
 
@@ -28,7 +33,7 @@ cd bin
 
 ```
 
-* Convert all characters to all lowecases
+* Convert all characters to all lowercases
 
 ```c
 
