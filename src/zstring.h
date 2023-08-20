@@ -53,6 +53,7 @@ bool isSpace(char c);
 bool isSymbol(char c);
 bool isNullTerminator(char c);
 bool isNewLine(char c);
+bool isStringNull(zstring str);
 bool isWordInString(zstring str, const char* word, int start);
 bool compareString(zstring str1, zstring str2);
 bool compareStringCI(zstring str1, zstring str2);
@@ -73,13 +74,14 @@ zstring concatenateStr(zstring str1, zstring str2);
 
 /* Free the string and sets its length to 0 */
 void freeZString(zstring str){
-    if(str.data == NULL) return;
+    if(isStringNull(str)) return;
     str.length = 0;
     free(str.data);
 }
 
 /* Copy a string to another */
 void copyStr(zstring str1, zstring str2){
+    if(isStringNull(str1)) return;
     strcpy(str2.data, str1.data);
     str2.length = str1.length;
 }
@@ -88,6 +90,12 @@ void copyStr(zstring str1, zstring str2){
 This case-sensitive function returns the number of occurances of a specific character inside of a string
 */
 size_t findOccuranceOf(zstring str, char toFind){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t occurences = 0;
     size_t i = 0;
     while(!isNullTerminator(str.data[i])){   
@@ -103,6 +111,12 @@ size_t findOccuranceOf(zstring str, char toFind){
 This case-insensitive function returns the number of occurances of a specific character inside of a string
 */
 size_t findOccuranceOfCI(zstring str, char toFind){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t occurences = 0;
     size_t i = 0;
     zstring toLowCase = toLowercaseStr(str);    // Convert the string and the word 
@@ -123,6 +137,12 @@ size_t findOccuranceOfCI(zstring str, char toFind){
 This function returns the index of where a word occurs within a string
 */
 size_t findStartOfWord(zstring str, const char* word){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; 
     while(!isNullTerminator(str.data[i])){
         if(str.data[i] == word[0]){ // Found the  start of a word
@@ -139,6 +159,12 @@ size_t findStartOfWord(zstring str, const char* word){
 This function the number of word inside of a string 
 */
 size_t numberOfWords(zstring str){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; size_t n = 0;
 
     if(!isSpace(str.data[0])){
@@ -206,10 +232,20 @@ bool isNewLine(char c){
     return (c == '\n');
 }
 
+bool isStringNull(zstring str){
+    return (str.data == NULL || str.length == 0);
+}
+
 /*
 Checks if a word is contained in the string or not 
 */
 bool isWordInString(zstring str, const char* word, int start){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; size_t  j = 1;
     while(!isNullTerminator(word[j])){
         if(word[j] != str.data[start+i+1]){ // if there is even a single character different from the word we have not found it 
@@ -225,6 +261,12 @@ bool isWordInString(zstring str, const char* word, int start){
 Check if two strings are equal (Note: this is a case-sensitive function)
 */
 bool compareString(zstring str1, zstring str2){
+
+    if(isStringNull(str1) || isStringNull(str2)){
+        fprintf(stderr, "Error! One of the strings is null\n");
+        exit(1);
+    }
+
     if(str1.length != str2.length){
         return false;
     }
@@ -244,6 +286,12 @@ bool compareString(zstring str1, zstring str2){
 Check if two strings are equal (Note: this is a case-insensitive function)
 */
 bool compareStringCI(zstring str1, zstring str2){
+
+    if(isStringNull(str1) || isStringNull(str2)){
+        fprintf(stderr, "Error! One of the strings is null\n");
+        exit(1);
+    }
+
     if(str1.length != str2.length){
         return false;
     }
@@ -306,6 +354,12 @@ zstring printz(size_t addedSize, const char* str, ...){
 Convert all the string to lowercases 
 */
 zstring toLowercaseStr(zstring str){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; 
     zstring lstr = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
@@ -325,6 +379,12 @@ zstring toLowercaseStr(zstring str){
 Convert all the string to uppercases 
 */
 zstring toUppercaseStr(zstring str){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; 
     zstring ustr = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
@@ -343,6 +403,12 @@ zstring toUppercaseStr(zstring str){
 This function returns the string without any spaces 
 */
 zstring trimStr(zstring str){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     zstring result = newZString(str.data);
     size_t i = 0; 
     size_t j = 0; 
@@ -362,6 +428,12 @@ zstring trimStr(zstring str){
 Remove a word from a string (Case-Sensitive)
 */
 zstring removeWord(zstring str, const char* word){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
@@ -383,6 +455,12 @@ zstring removeWord(zstring str, const char* word){
 Remove a word from a string (Case-Insensitive)
 */
 zstring removeWordCI(zstring str, const char* word){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
     zstring l_str = toLowercaseStr(str);
@@ -407,6 +485,12 @@ zstring removeWordCI(zstring str, const char* word){
 Remove every occurances of a specific character inside the string (Case-Sensitive)
 */
 zstring removeChar(zstring str, char c){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     zstring result = newZString(str.data);
     size_t i = 0; 
     size_t j = 0; 
@@ -426,6 +510,12 @@ zstring removeChar(zstring str, char c){
 Remove every occurances of a specific character inside the string (Case-Insensitive)
 */
 zstring removeCharCI(zstring str, char c){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     zstring result = newZString(str.data);
     size_t i = 0; 
     size_t j = 0; 
@@ -446,6 +536,12 @@ zstring removeCharCI(zstring str, char c){
 Gets a substring from a specific location in the string 
 */
 zstring subStr(zstring str,int start, int end){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     zstring result = newZString("");
     result.data = malloc((end - start) + 1);
     result.length = end - start;
@@ -463,6 +559,12 @@ zstring subStr(zstring str,int start, int end){
 Returns the reversed string 
 */
 zstring reverseStr(zstring str){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
     size_t i = 0;
     zstring result = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
@@ -478,6 +580,12 @@ zstring reverseStr(zstring str){
 Concatenates two string 
 */
 zstring concatenateStr(zstring str1, zstring str2){
+
+    if(isStringNull(str1) || isStringNull(str2)){
+        fprintf(stderr, "Error! One of the strings is null\n");
+        exit(1);
+    }
+
     zstring result = newZString(str1.data); //copy the first part of the string with the first one
     result.length = str1.length + str2.length;
     result.data = realloc(result.data, result.length + 1);
