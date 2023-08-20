@@ -9,5 +9,8 @@
         "ustr",
         "ZSTRING"
     ],
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "zstring.h": "c"
+    }
 }

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdarg.h>
+#include <string.h>
+#include <stdbool.h>
 
 //Struct that contains the main components of the string  
 
@@ -13,33 +15,30 @@ typedef struct zstring{
     size_t length;      // Length of the string
 }zstring;
 
-typedef enum{
-    False = 0,
-    True
-}Bool;
-
 void freeZString(zstring str);
-size_t lenOfStr(const char* str);
 size_t findOccuranceOf(zstring str, char toFind);
+size_t findOccuranceOfCI(zstring str, char toFind);
 size_t findStartOfWord(zstring str, char* word);
 size_t numberOfWords(zstring str);
 char toLowerCase(char c);
-char toupperCase(char c);
-Bool isaDigit(char c);
-Bool isaNumber(char c);
-Bool isaSpace(char c);
-Bool isaSymbol(char c);
-Bool isaTerminator(char c);
-Bool isaNewLine(char c);
-Bool isWordInString(zstring str, char* word, int start);
-Bool compareString(zstring str1, zstring str2);
+char toUpperCase(char c);
+bool isLetter(char c);
+bool isNumber(char c);
+bool isSpace(char c);
+bool isSymbol(char c);
+bool isNullTerminator(char c);
+bool isNewLine(char c);
+bool isWordInString(zstring str, char* word, int start);
+bool compareString(zstring str1, zstring str2);
+bool compareStringCI(zstring str1, zstring str2);
 zstring newZString(const char* str);
-zstring printz(const char* str, ...);
+zstring printz(size_t addedSize, const char* str, ...);
 zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
 zstring removeWord(zstring str, char* word);
 zstring removeChar(zstring str, char c);
+zstring subStr(zstring str,int start, int end);
 zstring copyStr(zstring str);
 zstring reverseStr(zstring str);
 zstring concatenateStr(zstring str1, zstring str2);
@@ -48,39 +47,21 @@ zstring concatenateStr(zstring str1, zstring str2);
 
 #ifdef ZSTRING_IMPLEMENTATION
 
-//TODO: improve this function
+/* Free the string and sets its length to 0 */
 void freeZString(zstring str){
     if(str.data == NULL) return;
     str.length = 0;
-    str.data[0] = '\0';
+    free(str.data);
 }
 
 /*
-This function returns the number of characters inside of a string 
-*/
-size_t lenOfStr(const char* str){
-    size_t len = 0;
-    
-    if(str == "") return 0;
-
-    while(!isaTerminator(str[len])){ //While loop until str[len] == '\0' => isaTerminator(str[len)
-        len++;
-    }
-    return len;
-}
-
-/*
-This function returns the number of occurances of a specific character inside of a string 
+This case-sensitive function returns the number of occurances of a specific character inside of a string
 */
 size_t findOccuranceOf(zstring str, char toFind){
     size_t occurences = 0;
     size_t i = 0;
-    zstring toLowCase = toLowercaseStr(str);    // Convert the string and the word 
-                                                // to all lowercases to allow 
-                                                // the function to find every occurrences 
-                                                // whenever the word is Upper/Lower-case
-    while(!isaTerminator(toLowCase.data[i])){   
-        if(toLowCase.data[i] == toLowerCase(toFind)){
+    while(!isNullTerminator(str.data[i])){   
+        if(str.data[i] == toFind){
             occurences++;
         }
         i++;
@@ -89,11 +70,31 @@ size_t findOccuranceOf(zstring str, char toFind){
 }
 
 /*
+This case-insensitive function returns the number of occurances of a specific character inside of a string
+*/
+size_t findOccuranceOfCI(zstring str, char toFind){
+    size_t occurences = 0;
+    size_t i = 0;
+    zstring toLowCase = toLowercaseStr(str);    // Convert the string and the word 
+                                                // to all lowercases to allow 
+                                                // the function to find every occurrences 
+                                                // whenever the word is Upper/Lower-case
+    while(!isNullTerminator(toLowCase.data[i])){   
+        if(toLowCase.data[i] == toLowerCase(toFind)){
+            occurences++;
+        }
+        i++;
+    }
+    freeZString(toLowCase);
+    return occurences;
+}
+
+/*
 This function returns the index of whee a word occurs within a string
 */
 size_t findStartOfWord(zstring str, char* word){
     size_t i = 0; 
-    while(!isaTerminator(str.data[i])){
+    while(!isNullTerminator(str.data[i])){
         if(str.data[i] == word[0]){ // Found the  start of a word
             if(isWordInString(str, word, i)){ // Check if the word is actually in the string 
                 return i; //if yes returns the index of the start 
@@ -101,7 +102,7 @@ size_t findStartOfWord(zstring str, char* word){
         }
         i++;
     }
-    return False; //if it does not find the word in the string it returns False
+    return false; //if it does not find the word in the string it returns False
 }
 
 /*
@@ -110,15 +111,18 @@ This function the number of word inside of a string
 size_t numberOfWords(zstring str){
     size_t i = 0; size_t n = 0;
 
-    if(!isaSpace(str.data[0])){
+    if(!isSpace(str.data[0])){
         n++;                        // Check if initially we find a word or a space 
     }
 
-    while(!isaTerminator(str.data[i])){
-        while(isaSpace(str.data[i])){
+    while(!isNullTerminator(str.data[i])){
+        while(isSpace(str.data[i])){
             i++;                    // Scroll through the string while there are spaces 
         }
-        if(!isaSpace(str.data[i]) && isaSpace(str.data[i+1])){
+        if(i > str.length -1){
+            break;
+        }
+        if(!isSpace(str.data[i]) && isSpace(str.data[i+1])){
             n++;                    // If the next character is not a space then we have found a word
         }
         i++;
@@ -126,81 +130,117 @@ size_t numberOfWords(zstring str){
     return n;
 }
 
+/* Convert the current character to a lowercase one */
 char toLowerCase(char c){
     if(c >= 'A' && c <= 'Z'){
         c += 32;
     }
     return c;
 }
-char toupperCase(char c){
+
+/* Convert the current character to an uppercase one */
+char toUpperCase(char c){
     if(c >= 'a' && c <= 'z'){
         c -= 32;
     }
     return c;
 }
 
-Bool isaDigit(char c){
+/* Check if the current character is a letter */
+bool isLetter(char c){
     return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
-Bool isaNumber(char c){
+/* Check if the current character is a number */
+bool isNumber(char c){
     return (c >= '1' && c <= '9');
 }
 
-Bool isaSpace(char c){
+/* Check if the current character is a space */
+bool isSpace(char c){
     return (c == ' ');
 }
 
-Bool isaSymbol(char c){
-    return (!isaDigit(c) && !isaNumber(c) && !isaSpace(c));
+/* Check if the current character is a Special Symbol */
+bool isSymbol(char c){
+    return (!isLetter(c) && !isNumber(c) && !isSpace(c));
 }
 
-Bool isaTerminator(char c){
+/* Check if the current character is a Null Terminator char ('\0')*/
+bool isNullTerminator(char c){
     return (c == '\0');
 }
 
-Bool isaNewLine(char c){
+/* Check if the current character is a new line char ('\n') */
+bool isNewLine(char c){
     return (c == '\n');
 }
 
 /*
 Checks if a word is contained in the string or not 
 */
-Bool isWordInString(zstring str, char* word, int start){
+bool isWordInString(zstring str, char* word, int start){
     size_t i = 0; size_t  j = 1;
-    while(!isaTerminator(word[j])){
+    while(!isNullTerminator(word[j])){
         if(word[j] != str.data[start+i+1]){ // if there is even a single character different from the word we have not found it 
-            return False;
+            return false;
         }
         j++;
         i++; 
     }
-    return True;
+    return true;
 }
+
 /*
-Check if two strings are equal 
+Check if two strings are equal (Note: this is a case-sensitive function)
 */
-Bool compareString(zstring str1, zstring str2){
+bool compareString(zstring str1, zstring str2){
     if(str1.length != str2.length){
-        return False;
+        return false;
     }
 
     size_t i = 0; 
-    while(!isaTerminator(str1.data[i])){
+    while(!isNullTerminator(str1.data[i])){
         if(str1.data[i] != str2.data[i]){
-            return False;
+            return false;
         }
         i++;
     }
 
-    return True;
+    return true;
 }
+
+/*
+Check if two strings are equal (Note: this is a case-insensitive function)
+*/
+bool compareStringCI(zstring str1, zstring str2){
+    if(str1.length != str2.length){
+        return false;
+    }
+    
+    zstring l_str1 = toLowercaseStr(str1);
+    zstring l_str2 = toLowercaseStr(str2);
+
+    size_t i = 0; 
+    while(!isNullTerminator(l_str1.data[i])){
+        if(l_str1.data[i] != l_str2.data[i]){
+            return false;
+        }
+        i++;
+    }
+
+    freeZString(l_str1);
+    freeZString(l_str2);
+
+    return true;
+}
+
 /*
 Create a new string with its data and its length 
 */
 zstring newZString(const char* str){
     zstring result;
-    result.data = malloc(lenOfStr(str));    //allocate memory for the string
+    result.data = malloc(strlen(str) + 1);    //allocate memory for the string
 
     if(result.data == NULL){    // checks if the malloc failed 
         printf("Could not allocate memory for the new ZString. Quitting.\n");
@@ -208,58 +248,59 @@ zstring newZString(const char* str){
     }
 
     size_t i = 0;
-    while(!isaTerminator(str[i])){
+    while(!isNullTerminator(str[i])){
         result.data[i] = str[i];        // fills the data inside the string 
         i++;
     }
     result.data[i] = '\0';
-    result.length = lenOfStr(result.data); // calculate the length of the string 
+    result.length = strlen(result.data); // calculate the length of the string 
     return result;
 }
 
 /*
 Create and print a new string that contains all the arguments defined in itself 
 */
-zstring printz(const char* str, ...){
+zstring printz(size_t addedSize, const char* str, ...){
     zstring result = newZString(str);
     va_list args;
     va_start(args, str);
-    int n = vsnprintf(result.data, sizeof(result.data) * result.length, str, args);
+    result.data = realloc(result.data,result.length + addedSize);
+    int n = vsnprintf(result.data, sizeof(char *) * result.length, str, args);
     va_end(args);
-    result.length = lenOfStr(result.data);
+    result.length = strlen(result.data);
     printf("String: '%s' of len %zu\n\n" , result.data, result.length);
-    result.length = lenOfStr(result.data);
     return result;
 }
 
 zstring toLowercaseStr(zstring str){
     size_t i = 0; 
     zstring lstr = newZString(str.data);
-    while(!isaTerminator(str.data[i])){
-        if(str.data[i] >= 'A' && str.data[i] <= 'Z' && !isaSpace(str.data[i]) && !isaNumber(str.data[i]) && !isaNewLine(str.data[i])){
-            lstr.data[i] = str.data[i] + 32; // shift the character to an upper case character to a lower one 
+    while(!isNullTerminator(str.data[i])){
+        if(str.data[i] >= 'A' && str.data[i] <= 'Z' && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
+            lstr.data[i] = toLowerCase(str.data[i]); // shift the character to an upper case character to a lower one 
         }else{
             lstr.data[i] = str.data[i];
         }
         i++;
     }
     lstr.data[i] = '\0';
-    lstr.length = lenOfStr(lstr.data);
+    lstr.length = strlen(lstr.data);
     return lstr;
 }
 
 zstring toUppercaseStr(zstring str){
     size_t i = 0; 
     zstring ustr = newZString(str.data);
-    while(!isaTerminator(str.data[i])){
-        if(str.data[i] >= 'A' && str.data[i] <= 'Z'){
-            ustr.data[i] = str.data[i] + 32; // shift the character to an lower case character to a upper one 
+    while(!isNullTerminator(str.data[i])){
+        if(str.data[i] >= 'A' && str.data[i] <= 'Z' && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
+            ustr.data[i] = toUpperCase(str.data[i]); // shift the character to an lower case character to a upper one 
         }else {
             ustr.data[i] = str.data[i];
         }
         i++;
     }
     ustr.data[i] = '\0';
+    ustr.length = strlen(ustr.data);
     return ustr;
 }
 /*
@@ -269,15 +310,15 @@ zstring trimStr(zstring str){
     zstring result = newZString(str.data);
     size_t i = 0; 
     size_t j = 0; 
-    while(!isaTerminator(str.data[i])){
-        if(isaSpace(str.data[i])){
+    while(!isNullTerminator(str.data[i])){
+        if(isSpace(str.data[i])){
             i++;                // scroll the string while the are spaces 
         }
         result.data[j++] = str.data[i]; // copy every character to result string that is not a space 
         i++;
     }
     result.data[j] = '\0';
-    result.length = lenOfStr(result.data);
+    result.length = strlen(result.data);
     return result;
 }
 
@@ -287,10 +328,10 @@ Remove a word from a string
 zstring removeWord(zstring str, char* word){
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
-    while(!isaTerminator(str.data[i])){
+    while(!isNullTerminator(str.data[i])){
         if(str.data[i] == word[0]){ // find the beginning of the word 
             if(isWordInString(str, word, i)){   // check if it is actually the word that we are searching 
-                i += lenOfStr(word);    // shift the index of the string after the removed word 
+                i += strlen(word);    // shift the index of the string after the removed word 
             }
         }
         result.data[j] = str.data[i]; // copy every character of the string except the word we do not want 
@@ -298,7 +339,7 @@ zstring removeWord(zstring str, char* word){
         j++;
     }
     result.data[j] = '\0';
-    result.length = lenOfStr(result.data);
+    result.length = strlen(result.data);
     return result;
 }
 
@@ -309,20 +350,34 @@ zstring removeChar(zstring str, char c){
     zstring result = newZString(str.data);
     size_t i = 0; 
     size_t j = 0; 
-    while(!isaTerminator(str.data[i])){
+    while(!isNullTerminator(str.data[i])){
         if(str.data[i] != c){
             result.data[j++] = str.data[i]; 
         }
         i++;
     }
     result.data[j] = '\0';
-    result.length = lenOfStr(result.data);
+    result.length = strlen(result.data);
     return result;
+}
+
+zstring subStr(zstring str,int start, int end){
+    zstring result = {0};
+    result.data = malloc((end - start) + 1);
+    result.length = end - start;
+    size_t j = 0;
+    for(int i = start; i < end; i++){
+        result.data[j] = str.data[i];
+        j++;
+    }
+    result.data[j] = '\0';
+    return result;
+
 }
 
 zstring copyStr(zstring str){
     zstring result = newZString(str.data);
-    result.length = lenOfStr(result.data);
+    result.length = strlen(result.data);
     return result;
 }
 
@@ -332,12 +387,12 @@ Returns the reversed string
 zstring reverseStr(zstring str){
     size_t i = 0;
     zstring result = newZString(str.data);
-    while(!isaTerminator(str.data[i])){
+    while(!isNullTerminator(str.data[i])){
         result.data[i] = str.data[str.length - i - 1];
         i++;
     }
     result.data[i] = '\0';
-    result.length = lenOfStr(result.data);
+    result.length = strlen(result.data);
     return result;
 }
 
@@ -345,20 +400,18 @@ zstring reverseStr(zstring str){
 Concatenates two string 
 */
 zstring concatenateStr(zstring str1, zstring str2){
-    zstring result = newZString(str1.data);
+    zstring result = newZString(str1.data); //copy the first part of the string with the first one
     result.length = str1.length + str2.length;
+    result.data = realloc(result.data, result.length + 1);
     size_t i = 0; 
-    size_t j = 0;
-    while(!isaTerminator(str1.data[i])){
-        result.data[i] = str1.data[i];      //copy the first part of the string with the first one 
-        i++;
-    }
-    while(!isaTerminator(str2.data[j])){
-        result.data[i] = str2.data[j];      //and then copy the second part of the string with the second one 
+    size_t j = str1.length;
+
+    while(!isNullTerminator(str2.data[i])){
+        result.data[j] = str2.data[i];      //and then copy the second part of the string with the second one 
         i++;
         j++;
     }
-    result.data[i] = '\0';
+    result.data[j] = '\0';
     return result;
 }
 
