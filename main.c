@@ -1,7 +1,17 @@
 #include <stdio.h>
 
+/*
+zString library made by zLouis043
+*/
+
 #define ZSTRING_IMPLEMENTATION
 #include "src/zstring.h"
+
+/*
+
+Use this main.c to test the functionalities of the zstring library.
+
+*/
 
 int main(int argc, char *argv[]){
 
