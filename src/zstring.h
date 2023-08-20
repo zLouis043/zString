@@ -43,7 +43,7 @@ void freeZString(zstring str);
 void copyStr(zstring str1, zstring str2);
 size_t findOccuranceOf(zstring str, char toFind);
 size_t findOccuranceOfCI(zstring str, char toFind);
-size_t findStartOfWord(zstring str, char* word);
+size_t findStartOfWord(zstring str, const char* word);
 size_t numberOfWords(zstring str);
 char toLowerCase(char c);
 char toUpperCase(char c);
@@ -53,7 +53,7 @@ bool isSpace(char c);
 bool isSymbol(char c);
 bool isNullTerminator(char c);
 bool isNewLine(char c);
-bool isWordInString(zstring str, char* word, int start);
+bool isWordInString(zstring str, const char* word, int start);
 bool compareString(zstring str1, zstring str2);
 bool compareStringCI(zstring str1, zstring str2);
 zstring newZString(const char* str);
@@ -61,7 +61,7 @@ zstring printz(size_t addedSize, const char* str, ...);
 zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
-zstring removeWord(zstring str, char* word);
+zstring removeWord(zstring str, const char* word);
 zstring removeCharCI(zstring str, char c);
 zstring subStr(zstring str,int start, int end);
 zstring reverseStr(zstring str);
@@ -122,7 +122,7 @@ size_t findOccuranceOfCI(zstring str, char toFind){
 /*
 This function returns the index of where a word occurs within a string
 */
-size_t findStartOfWord(zstring str, char* word){
+size_t findStartOfWord(zstring str, const char* word){
     size_t i = 0; 
     while(!isNullTerminator(str.data[i])){
         if(str.data[i] == word[0]){ // Found the  start of a word
@@ -209,7 +209,7 @@ bool isNewLine(char c){
 /*
 Checks if a word is contained in the string or not 
 */
-bool isWordInString(zstring str, char* word, int start){
+bool isWordInString(zstring str, const char* word, int start){
     size_t i = 0; size_t  j = 1;
     while(!isNullTerminator(word[j])){
         if(word[j] != str.data[start+i+1]){ // if there is even a single character different from the word we have not found it 
@@ -361,7 +361,7 @@ zstring trimStr(zstring str){
 /*
 Remove a word from a string (Case-Sensitive)
 */
-zstring removeWord(zstring str, char* word){
+zstring removeWord(zstring str, const char* word){
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
@@ -382,7 +382,7 @@ zstring removeWord(zstring str, char* word){
 /*
 Remove a word from a string (Case-Insensitive)
 */
-zstring removeWordCI(zstring str, char* word){
+zstring removeWordCI(zstring str, const char* word){
     size_t i = 0; int j = 0;
     zstring result = newZString(str.data);
     zstring l_str = toLowercaseStr(str);
