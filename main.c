@@ -5,69 +5,128 @@
 
 int main(int argc, char *argv[]){
 
-    if(argc != 2){
-        fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string>", argv[0]);
+    if(argc < 3){
+        fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
         exit(1);
     }
 
     zstring str = newZString(argv[1]);
-    zstring trimmedString = newZString("");
-    zstring removedWordString = newZString("");
-    zstring copiedString = newZString("");
-    zstring removedCharString = newZString("");
-    zstring reversedString = newZString("");
-    zstring printedString = newZString("");
-    zstring concatenatedString = newZString("");
+
+    switch(argv[2][1]){
+        case 'l': 
+            printf("String Length: %d\n", str.length);
+            break;
+        case 't':
+
+            switch(argv[2][2]){
+                case 'r':
+                   zstring trimmedString = trimStr(str); 
+                   printf("Trimmed string: '%s'\n", trimmedString.data);
+                   freeZString(trimmedString);
+                   break;
+                case 'l':
+                    zstring toLowStr = toLowercaseStr(str);
+                    printf("To LowerCase string: '%s'\n", toLowStr.data);
+                    freeZString(toLowStr);
+                    break;
+                case 'u':
+                    zstring toUpStr = toUppercaseStr(str);
+                    printf("To UpperCase string: '%s'\n", toUpStr.data);
+                    freeZString(toUpStr);
+                    break;
+            }
+
+            break;
+            
+        case 'r':
+
+            switch(argv[2][2]){
+                case 'e':
+                    zstring reversedStr = reverseStr(str);
+                    printf("Reversed string: '%s'\n", reversedStr.data);
+                    freeZString(reversedStr);
+                    break;
+                case 'w':
+
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                        exit(1);
+                    }
+
+                    zstring removedWord = removeWord(str, argv[3]);
+                    printf("String with removed word: '%s'\n", removedWord.data);
+                    freeZString(removedWord);
+                    break;
+
+                case 'c':
+
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
+                        exit(1);
+                    }
+
+                    zstring removedChar= removeChar(str, argv[3][0]);
+                    printf("String with removed word: '%s'\n", removedChar.data);
+                    freeZString(removedChar);
+                    break;                
+            }
+            break;
+        case 'c':
+            switch(argv[2][2]){
+                case 'm':
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
+                        exit(1);
+                    }
+
+                    switch(argv[2][3]){
+                        case 's':
+                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareString(str, newZString(argv[3])) ? "True" : "False");
+                        break;
+                        case 'i':
+                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[3])) ? "True" : "False");
+                        break;
+                    }
+
+                    break;
+                case 'c':
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cc <string2> \n", argv[0]);
+                        exit(1);
+                    }
+                    zstring concatenatedStr = concatenateStr(str, newZString(argv[3]));
+                    printf("Concatenated string: '%s'\n", concatenatedStr.data);
+                    freeZString(concatenatedStr);
+                    break;
+            }
+            break;
+        case 'n':
+            size_t numOfWords = numberOfWords(str);
+            printf("Number of words in string : %d\n", numOfWords);
+            break;
+        case 'o':
+            if(argc != 4) {
+                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                exit(1);
+            }
+
+            size_t occurances = 0;
+
+            switch(argv[2][2]){
+                case 's':
+                occurances = findOccuranceOf(str, argv[3][0]);
+                break;
+                case 'i':
+                occurances = findOccuranceOfCI(str, argv[3][0]);
+                break;
+            }
+            printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[3][0], occurances);
+            break;
+    }
+
     
-    size_t occurances = 0;
-    size_t numOfWords = 0;
-    char toFind = 'w';
-    char toRemove[] = "Hello, World";
-    bool areEqual = false;
+    freeZString(str);
 
-    printf("String: '%s' of Len: %zu\n\n", str.data, str.length);
-    
-    trimmedString = trimStr(str);
-    printf("Trimmed: '%s' of len: %zu\n\n", trimmedString.data, trimmedString.length);
-    
-    freeZString(trimmedString);
-
-    occurances = findOccuranceOf(str, toFind);
-    printf("In the string: '%s' the '%c' occures %zu times\n\n", str.data, toFind, occurances);
-
-    removedWordString  = removeWord(str, toRemove);
-    printf("Removed '%s' at index %zu to String: '%s' of len: %zu\n\n", toRemove, findStartOfWord(str, toRemove),removedWordString.data, removedWordString.length);
-    
-    freeZString(removedWordString);
-
-    copiedString = copyStr(str);
-    printf("Copied: '%s' of len: %zu\n\n", copiedString.data, copiedString.length);
-    
-    freeZString(copiedString);
-
-    areEqual = compareString(str, toLowercaseStr(str));
-    printf("String 1 : '%s' and String 2: '%s' are equal? %s\n\n", str.data, toLowercaseStr(str).data, areEqual ? "True" : "False");
-    
-    removedCharString  = removeChar(str, toFind);
-    printf("Removed '%c' to String: '%s' of len: %zu\n\n", toFind, removedCharString.data, removedCharString.length);
-    
-    freeZString(removedCharString);
-
-    reversedString = reverseStr(str);
-    printf("Reversed: '%s' of len %zu\n\n", reversedString.data, reversedString.length);
-
-    numOfWords = numberOfWords(str);
-    printf("In this string there are %zu words\n\n", numOfWords);
-
-    printedString = printz(200, "Hello there %s!", toRemove);
-
-    freeZString(printedString);
-
-    concatenatedString = concatenateStr(str, reversedString);
-    printf("Concatenated string: %s of len: %zu\n\n", concatenatedString.data, concatenatedString.length); 
-
-    freeZString(reversedString);
-    freeZString(concatenatedString);
 
     return 0;
 }

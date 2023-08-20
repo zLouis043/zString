@@ -114,7 +114,7 @@ size_t findOccuranceOfCI(zstring str, char toFind){
 }
 
 /*
-This function returns the index of whee a word occurs within a string
+This function returns the index of where a word occurs within a string
 */
 size_t findStartOfWord(zstring str, char* word){
     size_t i = 0; 
@@ -267,7 +267,7 @@ zstring newZString(const char* str){
     result.data = malloc(strlen(str) + 1);    //allocate memory for the string
 
     if(result.data == NULL){    // checks if the malloc failed 
-        printf("Could not allocate memory for the new ZString. Quitting.\n");
+        fprintf(stderr, "Could not allocate memory for the new ZString. Quitting.\n");
         exit(1);
     }
 
@@ -316,7 +316,7 @@ zstring toUppercaseStr(zstring str){
     size_t i = 0; 
     zstring ustr = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
-        if(str.data[i] >= 'A' && str.data[i] <= 'Z' && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
+        if(str.data[i] >= 'a' && str.data[i] <= 'z' && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
             ustr.data[i] = toUpperCase(str.data[i]); // shift the character to an lower case character to a upper one 
         }else {
             ustr.data[i] = str.data[i];
