@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
                     freeZString(toUpStr);
                     break;
                 default:
-                    fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
+                    fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> <function>", argv[0]);
                     exit(1);
                     break;
             }
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
                         removedWord = removeWordCI(str, argv[3]);
                         break;
                         default:
-                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
                         exit(1);
                         break;
                     }
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
                     freeZString(removedWord);
                     break;
                 default:
-                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
                 exit(1);
                 break;
 
@@ -110,7 +110,7 @@ int main(int argc, char *argv[]){
                             printf("String with removed word: '%s'\n", removedChar.data);
                             break;
                         default:
-                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
+                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
                         exit(1);
                         break;
                     }
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]){
                         printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[3])) ? "True" : "False");
                         break;
                         default:
-                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
+                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
                         exit(1);
                         break;
                     }
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]){
                     freeZString(concatenatedStr);
                     break;
                 default:
-                    fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
+                    fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> <function>", argv[0]);
                     exit(1);
                     break;
             }
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]){
         case 'o':
 
             if(argc != 4) {
-                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
                 exit(1);
             }
 
@@ -178,14 +178,14 @@ int main(int argc, char *argv[]){
                 occurances = findOccuranceOfCI(str, argv[3][0]);
                 break;
                 default:
-                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
                 exit(1);
                 break;
             }
             printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[3][0], occurances);
             break;
         default:
-            fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
+            fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> <function>", argv[0]);
             exit(1);
             break;
     }
