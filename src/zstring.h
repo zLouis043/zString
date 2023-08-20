@@ -353,7 +353,7 @@ zstring trimStr(zstring str){
 }
 
 /*
-Remove a word from a string
+Remove a word from a string (Case-Sensitive)
 */
 zstring removeWord(zstring str, char* word){
     size_t i = 0; int j = 0;
@@ -374,6 +374,30 @@ zstring removeWord(zstring str, char* word){
 }
 
 /*
+Remove a word from a string (Case-Insensitive)
+*/
+zstring removeWordCI(zstring str, char* word){
+    size_t i = 0; int j = 0;
+    zstring result = newZString(str.data);
+    zstring l_str = toLowercaseStr(str);
+    zstring l_word = toLowercaseStr(newZString(word));
+    while(!isNullTerminator(l_str.data[i])){
+        if(l_str.data[i] == l_word.data[0]){ // find the beginning of the word 
+            if(isWordInString(l_str, l_word.data, i)){   // check if it is actually the word that we are searching 
+                i += strlen(l_word.data);    // shift the index of the string after the removed word 
+            }
+        }
+        result.data[j] = str.data[i]; // copy every character of the string except the word we do not want 
+        i++;
+        j++;
+    }
+    result.data[j] = '\0';
+    result.length = strlen(result.data);
+    freeZString(l_word);
+    return result;
+}
+
+/*
 Remove every occurances of a specific character inside the string (Case-Sensitive)
 */
 zstring removeChar(zstring str, char c){
@@ -390,6 +414,7 @@ zstring removeChar(zstring str, char c){
     result.length = strlen(result.data);
     return result;
 }
+
 
 /*
 Remove every occurances of a specific character inside the string (Case-Insensitive)
