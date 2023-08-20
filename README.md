@@ -13,7 +13,7 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ## Test and functionalities 
 
-```
+```c
 
 cd bin 
 ./zstring <string> <function to test>
@@ -22,7 +22,7 @@ cd bin
 
 * Trim a string
 
-```
+```c
 
 ./zstring <string> -tr 
 
@@ -30,7 +30,7 @@ cd bin
 
 * Convert all characters to all lowecases
 
-```
+```c
 
 ./zstring <string> -tl 
 
@@ -38,7 +38,7 @@ cd bin
 
 * Convert all characters to all uppercases
 
-```
+```c
 
 ./zstring <string> -tu 
 
@@ -46,7 +46,7 @@ cd bin
 
 * Reverse a string
 
-```
+```c
 
 ./zstring <string> -re 
 
@@ -54,7 +54,7 @@ cd bin
 
 * Remove a word from another string
 
-```
+```c
 
 ./zstring <string> -rw <wordToRemove>
 
@@ -62,7 +62,7 @@ cd bin
 
 * Remove every occurences of a character inside of a string
 
-```
+```c
 
 ./zstring <string> -rc <charToRemove>
 
@@ -70,7 +70,7 @@ cd bin
 
 * Compare two strings (Case-Sensitive and Case-Insensitive)
 
-```
+```c
 
 ./zstring <string1> -cms <string2> // Case-Sensitive
 ./zstring <string1> -cmi <string2> // Case-Insensitive
@@ -79,7 +79,7 @@ cd bin
 
 * Concatenate two strings
 
-```
+```c
 
 ./zstring <string1> -cc <string2> 
 
@@ -87,7 +87,7 @@ cd bin
 
 * Find the number of words in a string
 
-```
+```c
 
 ./zstring <string> -n
 
@@ -95,7 +95,7 @@ cd bin
 
 * Find the number of occurances of a characted in a string (Case-Sensitive and Case-Insensitive)
 
-```
+```c
 
 ./zstring <string> -os <charToFind> // Case-Sensitive
 ./zstring <string> -oi <charToFind> // Case-Insensitive
