@@ -15,7 +15,8 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ```c
 
-cd bin 
+cd bin
+make 
 ./zstring <string> <function to test>
 
 ```
