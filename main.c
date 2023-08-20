@@ -48,21 +48,18 @@ int main(int argc, char *argv[]){
                     break;
                 case 'w':
 
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                        exit(1);
+                    }
+
                     zstring removedWord = removeWord(str, argv[3]);
 
                     switch(argv[2][3]){
                         case 's':
-                        if(argc != 4) {
-                            fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rws <wordToRemove> \n", argv[0]);
-                            exit(1);
-                        }
                         removedWord = removeWord(str, argv[3]);
                         break;
                         case 'i':
-                        if(argc != 4) {
-                            fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rwi <wordToRemove> \n", argv[0]);
-                            exit(1);
-                        }
                         removedWord = removeWordCI(str, argv[3]);
                         break;
                     }
@@ -73,22 +70,19 @@ int main(int argc, char *argv[]){
 
                 case 'c':
 
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
+                        exit(1);
+                    }
+
                     zstring removedChar;
 
                     switch(argv[2][3]){
                         case 's':
-                            if(argc != 4) {
-                                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rcs <charToRemove> \n", argv[0]);
-                                exit(1);
-                            }
                             removedChar= removeChar(str, argv[3][0]);
                             printf("String with removed word: '%s'\n", removedChar.data);
                             break;
                         case 'i':
-                            if(argc != 4) {
-                                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rci <charToRemove> \n", argv[0]);
-                                exit(1);
-                            }
                             removedChar= removeCharCI(str, argv[3][0]);
                             printf("String with removed word: '%s'\n", removedChar.data);
                             break;
@@ -102,19 +96,16 @@ int main(int argc, char *argv[]){
             switch(argv[2][2]){
                 case 'm':
 
+                    if(argc != 4) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
+                        exit(1);
+                    }
+
                     switch(argv[2][3]){
                         case 's':
-                        if(argc != 4) {
-                            fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cms <string2> \n", argv[0]);
-                            exit(1);
-                        }
                         printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareString(str, newZString(argv[3])) ? "True" : "False");
                         break;
                         case 'i':
-                        if(argc != 4) {
-                            fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cmi <string2> \n", argv[0]);
-                            exit(1);
-                        }
                         printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[3])) ? "True" : "False");
                         break;
                     }
@@ -137,21 +128,18 @@ int main(int argc, char *argv[]){
             break;
         case 'o':
 
+            if(argc != 4) {
+                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                exit(1);
+            }
+
             size_t occurances = 0;
 
             switch(argv[2][2]){
                 case 's':
-                if(argc != 4) {
-                    fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -os <charToFind>\n", argv[0]);
-                    exit(1);
-                }
                 occurances = findOccuranceOf(str, argv[3][0]);
                 break;
                 case 'i':
-                if(argc != 4) {
-                    fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -oi <charToFind>\n", argv[0]);
-                    exit(1);
-                }
                 occurances = findOccuranceOfCI(str, argv[3][0]);
                 break;
             }
