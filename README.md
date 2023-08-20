@@ -64,7 +64,8 @@ cd bin
 
 ```c
 
-./zstring <string> -rc <charToRemove>
+./zstring <string> -rcs <charToRemove> // Case-Sensitive
+./zstring <string> -rci <charToRemove> // Case-Insensitive
 
 ```
 
