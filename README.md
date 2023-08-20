@@ -56,7 +56,8 @@ cd bin
 
 ```c
 
-./zstring <string> -rw <wordToRemove>
+./zstring <string> -rws <wordToRemove> // Case-Sensitive
+./zstring <string> -rwi <wordToRemove> // Case-Insensitive
 
 ```
 
