@@ -40,6 +40,7 @@ typedef struct zstring{
 }zstring;
 
 void freeZString(zstring str);
+void copyStr(zstring str1, zstring str2);
 size_t findOccuranceOf(zstring str, char toFind);
 size_t findOccuranceOfCI(zstring str, char toFind);
 size_t findStartOfWord(zstring str, char* word);
@@ -63,7 +64,6 @@ zstring trimStr(zstring str);
 zstring removeWord(zstring str, char* word);
 zstring removeChar(zstring str, char c);
 zstring subStr(zstring str,int start, int end);
-zstring copyStr(zstring str);
 zstring reverseStr(zstring str);
 zstring concatenateStr(zstring str1, zstring str2);
 
@@ -76,6 +76,12 @@ void freeZString(zstring str){
     if(str.data == NULL) return;
     str.length = 0;
     free(str.data);
+}
+
+/* Copy a string to another */
+void copyStr(zstring str1, zstring str2){
+    strcpy(str2.data, str1.data);
+    str2.length = str1.length;
 }
 
 /*
@@ -397,12 +403,6 @@ zstring subStr(zstring str,int start, int end){
     result.data[j] = '\0';
     return result;
 
-}
-
-zstring copyStr(zstring str){
-    zstring result = newZString(str.data);
-    result.length = strlen(result.data);
-    return result;
 }
 
 /*
