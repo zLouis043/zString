@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
 zString library made by zLouis043
@@ -44,6 +45,10 @@ int main(int argc, char *argv[]){
                     printf("To UpperCase string: '%s'\n", toUpStr.data);
                     freeZString(toUpStr);
                     break;
+                default:
+                    fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
+                    exit(1);
+                    break;
             }
 
             break;
@@ -72,11 +77,19 @@ int main(int argc, char *argv[]){
                         case 'i':
                         removedWord = removeWordCI(str, argv[3]);
                         break;
+                        default:
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                        exit(1);
+                        break;
                     }
 
                     printf("String with removed word: '%s'\n", removedWord.data);
                     freeZString(removedWord);
                     break;
+                default:
+                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                exit(1);
+                break;
 
                 case 'c':
 
@@ -96,6 +109,10 @@ int main(int argc, char *argv[]){
                             removedChar= removeCharCI(str, argv[3][0]);
                             printf("String with removed word: '%s'\n", removedChar.data);
                             break;
+                        default:
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
+                        exit(1);
+                        break;
                     }
 
                     freeZString(removedChar);
@@ -118,6 +135,10 @@ int main(int argc, char *argv[]){
                         case 'i':
                         printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[3])) ? "True" : "False");
                         break;
+                        default:
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
+                        exit(1);
+                        break;
                     }
 
                     break;
@@ -129,6 +150,10 @@ int main(int argc, char *argv[]){
                     zstring concatenatedStr = concatenateStr(str, newZString(argv[3]));
                     printf("Concatenated string: '%s'\n", concatenatedStr.data);
                     freeZString(concatenatedStr);
+                    break;
+                default:
+                    fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
+                    exit(1);
                     break;
             }
             break;
@@ -152,8 +177,16 @@ int main(int argc, char *argv[]){
                 case 'i':
                 occurances = findOccuranceOfCI(str, argv[3][0]);
                 break;
+                default:
+                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                exit(1);
+                break;
             }
             printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[3][0], occurances);
+            break;
+        default:
+            fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
+            exit(1);
             break;
     }
 
