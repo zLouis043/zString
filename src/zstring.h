@@ -302,6 +302,9 @@ zstring printz(size_t addedSize, const char* str, ...){
     return result;
 }
 
+/*
+Convert all the string to lowercases 
+*/
 zstring toLowercaseStr(zstring str){
     size_t i = 0; 
     zstring lstr = newZString(str.data);
@@ -318,6 +321,9 @@ zstring toLowercaseStr(zstring str){
     return lstr;
 }
 
+/*
+Convert all the string to uppercases 
+*/
 zstring toUppercaseStr(zstring str){
     size_t i = 0; 
     zstring ustr = newZString(str.data);
