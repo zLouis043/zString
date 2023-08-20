@@ -33,7 +33,7 @@ make
 
 ```
 
-* Convert all characters to all lowecases
+* Convert all characters to all lowercases
 
 ```c
 
