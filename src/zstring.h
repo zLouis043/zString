@@ -442,6 +442,9 @@ zstring removeCharCI(zstring str, char c){
     return result;
 }
 
+/*
+Gets a substring from a specific location in the string 
+*/
 zstring subStr(zstring str,int start, int end){
     zstring result = {0};
     result.data = malloc((end - start) + 1);
