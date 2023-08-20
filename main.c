@@ -25,7 +25,6 @@ int main(int argc, char *argv[]){
     char toRemove[] = "Hello, World";
     bool areEqual = false;
 
-    str.length = strlen(str.data);
     printf("String: '%s' of Len: %zu\n\n", str.data, str.length);
     
     trimmedString = trimStr(str);
