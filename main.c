@@ -65,8 +65,19 @@ int main(int argc, char *argv[]){
                         exit(1);
                     }
 
-                    zstring removedChar= removeChar(str, argv[3][0]);
-                    printf("String with removed word: '%s'\n", removedChar.data);
+                    zstring removedChar;
+
+                    switch(argv[2][3]){
+                        case 's':
+                            removedChar= removeChar(str, argv[3][0]);
+                            printf("String with removed word: '%s'\n", removedChar.data);
+                            break;
+                        case 'i':
+                            removedChar= removeCharCI(str, argv[3][0]);
+                            printf("String with removed word: '%s'\n", removedChar.data);
+                            break;
+                    }
+
                     freeZString(removedChar);
                     break;                
             }

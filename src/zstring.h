@@ -62,7 +62,7 @@ zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
 zstring removeWord(zstring str, char* word);
-zstring removeChar(zstring str, char c);
+zstring removeCharCI(zstring str, char c);
 zstring subStr(zstring str,int start, int end);
 zstring reverseStr(zstring str);
 zstring concatenateStr(zstring str1, zstring str2);
@@ -374,7 +374,7 @@ zstring removeWord(zstring str, char* word){
 }
 
 /*
-Remove every occurances of a specific character inside the string 
+Remove every occurances of a specific character inside the string (Case-Sensitive)
 */
 zstring removeChar(zstring str, char c){
     zstring result = newZString(str.data);
@@ -388,6 +388,26 @@ zstring removeChar(zstring str, char c){
     }
     result.data[j] = '\0';
     result.length = strlen(result.data);
+    return result;
+}
+
+/*
+Remove every occurances of a specific character inside the string (Case-Insensitive)
+*/
+zstring removeCharCI(zstring str, char c){
+    zstring result = newZString(str.data);
+    size_t i = 0; 
+    size_t j = 0; 
+    zstring l_str = toLowercaseStr(str);
+    while(!isNullTerminator(l_str.data[i])){
+        if(l_str.data[i] != toLowerCase(c)){
+            result.data[j++] = l_str.data[i]; 
+        }
+        i++;
+    }
+    result.data[j] = '\0';
+    result.length = strlen(result.data);
+    freeZString(l_str);
     return result;
 }
 
