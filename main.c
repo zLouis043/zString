@@ -124,10 +124,10 @@ int main(int argc, char *argv[]){
 
                     switch(argv[3][1]){
                         case 's':
-                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareString(str, newZString(argv[4])) ? "True" : "False");
+                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[4], compareString(str, newZString(argv[4])) ? "True" : "False");
                         break;
                         case 'i':
-                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[4])) ? "True" : "False");
+                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[4], compareStringCI(str, newZString(argv[4])) ? "True" : "False");
                         break;
                         default:
                         fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string1> -cm -s or -i <string2> \n", argv[0]);
