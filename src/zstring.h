@@ -597,9 +597,8 @@ zstring chopLeftBySize(zstring str, size_t size){
     }
 
     zstring result = newZString(str.data);
-    int i = 0; int j = 0;
+    int i = size; int j = 0;
     while(!isNullTerminator(str.data[i])){
-        while(i < size) i++;                // Skip the string copy for a specified size 
         result.data[j] = str.data[i];
         j++;
         i++;
