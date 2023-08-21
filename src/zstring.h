@@ -160,10 +160,21 @@ bool isNewLine(char c);
 */
 bool isStringNull(zstring str);
 
-/* Checks if a word is contained in the string or not */
+/*
+    Checks if a word is contained in the string or not.
+    @param str The string to be checked.
+    @param word The word that will be searched in the string.
+    @param start The index where the search will start.
+    @result True if the word is contained in the string False if it is not.
+*/
 bool isWordInString(zstring str, const char* word, int start);
 
-/* Check if two strings are equal (Note: this is a case-sensitive function) */
+/*
+    Check if two strings are equal (Note: this is a case-sensitive function).
+    @param str1 The first string that will be compared with the other string. 
+    @param str2 The second string that will be compared with the other string. 
+    @result True if the strings are equal False if they are not. 
+*/
 bool compareString(zstring str1, zstring str2);
 
 /* Check if two strings are equal (Note: this is a case-insensitive function) */
