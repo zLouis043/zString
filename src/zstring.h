@@ -583,6 +583,7 @@ zstring concatenateStr(zstring str1, zstring str2){
     return result;
 }
 
+/* Chop the string from the left by a specified size */
 zstring chopLeftBySize(zstring str, size_t size){
 
     if(isStringNull(str)){
@@ -598,7 +599,7 @@ zstring chopLeftBySize(zstring str, size_t size){
     zstring result = newZString(str.data);
     int i = 0; int j = 0;
     while(!isNullTerminator(str.data[i])){
-        while(i < size) i++;
+        while(i < size) i++;                // Skip the string copy for a specified size 
         result.data[j] = str.data[i];
         j++;
         i++;
@@ -609,6 +610,7 @@ zstring chopLeftBySize(zstring str, size_t size){
     return result;
 }
 
+/* Chop the string from the right by a specified size */
 zstring chopRightBySize(zstring str, size_t size){
 
     if(isStringNull(str)){
@@ -623,7 +625,7 @@ zstring chopRightBySize(zstring str, size_t size){
 
     zstring result = newZString(str.data);
     int i = 0; 
-    while(!isNullTerminator(str.data[i]) && i < str.length - size){
+    while(!isNullTerminator(str.data[i]) && i < str.length - size){ // copy the string until the requested size
         result.data[i] = str.data[i];
         i++;
 
