@@ -88,9 +88,7 @@ void copyStr(zstring str1, zstring str2){
     str2.length = str1.length;
 }
 
-/*
-This case-sensitive function returns the number of occurances of a specific character inside of a string
-*/
+/* This function returns the number of occurances of a specific character inside of a string (Case-sensitive) */
 size_t findOccuranceOf(zstring str, char toFind){
 
     if(isStringNull(str)){
@@ -109,9 +107,7 @@ size_t findOccuranceOf(zstring str, char toFind){
     return occurences;
 }
 
-/*
-This case-insensitive function returns the number of occurances of a specific character inside of a string
-*/
+/* This function returns the number of occurances of a specific character inside of a string (Case-insensitive)*/
 size_t findOccuranceOfCI(zstring str, char toFind){
 
     if(isStringNull(str)){
@@ -135,9 +131,7 @@ size_t findOccuranceOfCI(zstring str, char toFind){
     return occurences;
 }
 
-/*
-This function returns the index of where a word occurs within a string
-*/
+/* This function returns the index of where a word occurs within a string */
 size_t findStartOfWord(zstring str, const char* word){
 
     if(isStringNull(str)){
@@ -157,9 +151,7 @@ size_t findStartOfWord(zstring str, const char* word){
     return false; //if it does not find the word in the string it returns False
 }
 
-/*
-This function the number of word inside of a string 
-*/
+/* This function the number of word inside of a string */
 size_t numberOfWords(zstring str){
 
     if(isStringNull(str)){
@@ -248,9 +240,7 @@ bool isStringNull(zstring str){
     return (str.data == NULL || str.length == 0);
 }
 
-/*
-Checks if a word is contained in the string or not 
-*/
+/* Checks if a word is contained in the string or not */
 bool isWordInString(zstring str, const char* word, int start){
 
     if(isStringNull(str)){
@@ -269,9 +259,7 @@ bool isWordInString(zstring str, const char* word, int start){
     return true;
 }
 
-/*
-Check if two strings are equal (Note: this is a case-sensitive function)
-*/
+/* Check if two strings are equal (Note: this is a case-sensitive function) */
 bool compareString(zstring str1, zstring str2){
 
     if(isStringNull(str1) || isStringNull(str2)){
@@ -294,9 +282,7 @@ bool compareString(zstring str1, zstring str2){
     return true;
 }
 
-/*
-Check if two strings are equal (Note: this is a case-insensitive function)
-*/
+/* Check if two strings are equal (Note: this is a case-insensitive function) */
 bool compareStringCI(zstring str1, zstring str2){
 
     if(isStringNull(str1) || isStringNull(str2)){
@@ -325,9 +311,7 @@ bool compareStringCI(zstring str1, zstring str2){
     return true;
 }
 
-/*
-Create a new string with its data and its length 
-*/
+/* Create a new string with its data and its length */
 zstring newZString(const char* str){
     zstring result;
     result.data = malloc(strlen(str) + 1);    //allocate memory for the string
@@ -347,9 +331,7 @@ zstring newZString(const char* str){
     return result;
 }
 
-/*
-Create and print a new string that contains all the arguments defined in itself 
-*/
+/* Create and print a new string that contains all the arguments defined in itself */
 zstring printz(size_t addedSize, const char* str, ...){
     zstring result = newZString(str);
     va_list args;
@@ -362,9 +344,7 @@ zstring printz(size_t addedSize, const char* str, ...){
     return result;
 }
 
-/*
-Convert all the string to lowercases 
-*/
+/* Convert all the string to lowercases */
 zstring toLowercaseStr(zstring str){
 
     if(isStringNull(str)){
@@ -387,9 +367,7 @@ zstring toLowercaseStr(zstring str){
     return lstr;
 }
 
-/*
-Convert all the string to uppercases 
-*/
+/* Convert all the string to uppercases */
 zstring toUppercaseStr(zstring str){
 
     if(isStringNull(str)){
@@ -411,9 +389,7 @@ zstring toUppercaseStr(zstring str){
     ustr.length = strlen(ustr.data);
     return ustr;
 }
-/*
-This function returns the string without any spaces 
-*/
+/* This function returns the string without any spaces */
 zstring trimStr(zstring str){
 
     if(isStringNull(str)){
@@ -436,9 +412,7 @@ zstring trimStr(zstring str){
     return result;
 }
 
-/*
-Remove a word from a string (Case-Sensitive)
-*/
+/* Remove a word from a string (Case-Sensitive) */
 zstring removeWord(zstring str, const char* word){
 
     if(isStringNull(str)){
@@ -463,9 +437,7 @@ zstring removeWord(zstring str, const char* word){
     return result;
 }
 
-/*
-Remove a word from a string (Case-Insensitive)
-*/
+/* Remove a word from a string (Case-Insensitive) */
 zstring removeWordCI(zstring str, const char* word){
 
     if(isStringNull(str)){
@@ -493,9 +465,7 @@ zstring removeWordCI(zstring str, const char* word){
     return result;
 }
 
-/*
-Remove every occurances of a specific character inside the string (Case-Sensitive)
-*/
+/* Remove every occurances of a specific character inside the string (Case-Sensitive) */
 zstring removeChar(zstring str, char c){
 
     if(isStringNull(str)){
@@ -518,9 +488,7 @@ zstring removeChar(zstring str, char c){
 }
 
 
-/*
-Remove every occurances of a specific character inside the string (Case-Insensitive)
-*/
+/* Remove every occurances of a specific character inside the string (Case-Insensitive) */
 zstring removeCharCI(zstring str, char c){
 
     if(isStringNull(str)){
@@ -544,9 +512,7 @@ zstring removeCharCI(zstring str, char c){
     return result;
 }
 
-/*
-Gets a substring from a specific location in the string 
-*/
+/* Gets a substring from a specific location in the string */
 zstring subStr(zstring str,int start, int end){
 
     if(isStringNull(str)){
@@ -567,9 +533,7 @@ zstring subStr(zstring str,int start, int end){
 
 }
 
-/*
-Returns the reversed string 
-*/
+/* Returns the reversed string */
 zstring reverseStr(zstring str){
 
     if(isStringNull(str)){
@@ -588,9 +552,7 @@ zstring reverseStr(zstring str){
     return result;
 }
 
-/*
-Concatenates two string 
-*/
+/* Concatenates two string */
 zstring concatenateStr(zstring str1, zstring str2){
 
     if(isStringNull(str1) || isStringNull(str2)){
