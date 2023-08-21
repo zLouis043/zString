@@ -1,4 +1,9 @@
-# zString 
+# zString
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/zLouis043/zString/main)
+![GitHub top language](https://img.shields.io/github/languages/top/zLouis043/zString)
+
 Simple and beginner-friendly header-only string library useful for the ones who have just started learning C language or for those that want to use an essential string library for their projects.
 
 ## How-To
@@ -108,6 +113,8 @@ make
 ./zstring <string> -o -i <charToFind> // Case-Insensitive
 
 ```
+
+### Note: It only works with ASCII characters right now. 
 
 
  
