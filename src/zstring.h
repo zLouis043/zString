@@ -71,6 +71,8 @@ zstring removeCharCI(zstring str, char c);
 zstring subStr(zstring str,int start, int end);
 zstring reverseStr(zstring str);
 zstring concatenateStr(zstring str1, zstring str2);
+zstring chopLeftBySize(zstring str, size_t size);
+zstring chopRightBySize(zstring str, size_t size);
 
 #endif // ZSTRING_H_
 
@@ -578,6 +580,56 @@ zstring concatenateStr(zstring str1, zstring str2){
         j++;
     }
     result.data[j] = '\0';
+    return result;
+}
+
+zstring chopLeftBySize(zstring str, size_t size){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
+    if(size > str.length){
+        fprintf(stderr, "Error! Size requested is larger than string length\n");
+        exit(1);
+    }
+
+    zstring result = newZString(str.data);
+    int i = 0; int j = 0;
+    while(!isNullTerminator(str.data[i])){
+        while(i < size) i++;
+        result.data[j] = str.data[i];
+        j++;
+        i++;
+
+    }
+    result.data[j] = '\0';
+    result.data = realloc(result.data, strlen(result.data));
+    return result;
+}
+
+zstring chopRightBySize(zstring str, size_t size){
+
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
+    if(size > str.length){
+        fprintf(stderr, "Error! Size requested is larger than string length\n");
+        exit(1);
+    }
+
+    zstring result = newZString(str.data);
+    int i = 0; 
+    while(!isNullTerminator(str.data[i]) && i < str.length - size){
+        result.data[i] = str.data[i];
+        i++;
+
+    }
+    result.data[i] = '\0';
+    result.data = realloc(result.data, strlen(result.data));
     return result;
 }
 
