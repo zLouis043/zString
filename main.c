@@ -86,11 +86,6 @@ int main(int argc, char *argv[]){
                     printf("String with removed word: '%s'\n", removedWord.data);
                     freeZString(removedWord);
                     break;
-                default:
-                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
-                exit(1);
-                break;
-
                 case 'c':
 
                     if(argc != 5) {
@@ -116,7 +111,11 @@ int main(int argc, char *argv[]){
                     }
 
                     freeZString(removedChar);
-                    break;                
+                    break; 
+                default:
+                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -re / -rw or -rc <ToRemove> \n", argv[0]);
+                exit(1);
+            break;               
             }
             break;
         case 'c':
@@ -185,7 +184,7 @@ int main(int argc, char *argv[]){
             printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[4][0], occurances);
             break;
         default:
-            fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> <function>", argv[0]);
+            fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
             exit(1);
             break;
     }
