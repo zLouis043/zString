@@ -65,6 +65,7 @@ zstring toLowercaseStr(zstring str);
 zstring toUppercaseStr(zstring str);
 zstring trimStr(zstring str);
 zstring removeWord(zstring str, const char* word);
+zstring removeChar(zstring str, char c);
 zstring removeCharCI(zstring str, char c);
 zstring subStr(zstring str,int start, int end);
 zstring reverseStr(zstring str);
