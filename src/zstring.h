@@ -33,6 +33,7 @@ SOFTWARE.
 #include <stdbool.h>
 #include <math.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 /*! 
     Struct that contains the data pointer of the string and its length. 

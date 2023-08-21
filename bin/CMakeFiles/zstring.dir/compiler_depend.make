@@ -12,6 +12,7 @@ CMakeFiles/zstring.dir/main.c.obj: D:/zString/main.c \
   C:/msys64/mingw64/include/corecrt_wstdlib.h \
   C:/msys64/mingw64/include/crtdefs.h \
   C:/msys64/mingw64/include/errno.h \
+  C:/msys64/mingw64/include/inttypes.h \
   C:/msys64/mingw64/include/limits.h \
   C:/msys64/mingw64/include/malloc.h \
   C:/msys64/mingw64/include/math.h \
@@ -56,6 +57,8 @@ C:/msys64/mingw64/include/corecrt_stdio_config.h:
 C:/msys64/mingw64/include/crtdefs.h:
 
 C:/msys64/mingw64/include/errno.h:
+
+C:/msys64/mingw64/include/inttypes.h:
 
 C:/msys64/mingw64/include/limits.h:
 
