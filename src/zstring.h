@@ -322,13 +322,9 @@ zstring newZString(const char* str){
         exit(1);
     }
 
-    size_t i = 0;
-    while(!isNullTerminator(str[i])){
-        result.data[i] = str[i];        // fills the data inside the string 
-        i++;
-    }
-    result.data[i] = '\0';
+    strcpy(result.data, str);
     result.length = strlen(result.data); // calculate the length of the string 
+    result.data[result.length] = '\0';
     return result;
 }
 
