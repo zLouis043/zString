@@ -61,8 +61,8 @@ make
 
 ```c
 
-./zstring <string> -rws <wordToRemove> // Case-Sensitive
-./zstring <string> -rwi <wordToRemove> // Case-Insensitive
+./zstring <string> -rw -s <wordToRemove> // Case-Sensitive
+./zstring <string> -rw -i <wordToRemove> // Case-Insensitive
 
 ```
 
@@ -70,8 +70,8 @@ make
 
 ```c
 
-./zstring <string> -rcs <charToRemove> // Case-Sensitive
-./zstring <string> -rci <charToRemove> // Case-Insensitive
+./zstring <string> -rc -s <charToRemove> // Case-Sensitive
+./zstring <string> -rc -i <charToRemove> // Case-Insensitive
 
 ```
 
@@ -79,8 +79,8 @@ make
 
 ```c
 
-./zstring <string1> -cms <string2> // Case-Sensitive
-./zstring <string1> -cmi <string2> // Case-Insensitive
+./zstring <string1> -cm -s <string2> // Case-Sensitive
+./zstring <string1> -cm -i <string2> // Case-Insensitive
 
 ```
 
@@ -104,8 +104,8 @@ make
 
 ```c
 
-./zstring <string> -os <charToFind> // Case-Sensitive
-./zstring <string> -oi <charToFind> // Case-Insensitive
+./zstring <string> -o -s <charToFind> // Case-Sensitive
+./zstring <string> -o -i <charToFind> // Case-Insensitive
 
 ```
 
