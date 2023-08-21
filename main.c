@@ -157,6 +157,54 @@ int main(int argc, char *argv[]){
                     printf("Concatenated string: '%s'\n", concatenatedStr.data);
                     freeZString(concatenatedStr);
                     break;
+                case 'p':
+                    if(argc != 6) {
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cp -l or - r -s or -w <size> or <numOfWords>\n", argv[0]);
+                        exit(1);
+                    }
+                    zstring choppedStr;
+                    switch(argv[3][1]){
+                        case 'l':
+                            switch (argv[4][1])
+                            {
+                            case 's':
+                                choppedStr = chopLeftBySize(str, atoi(argv[5]));
+                                printf("Chopped String From Left by Size[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                freeZString(choppedStr);
+                            break;
+                            case 'w':
+                                choppedStr = chopLeftByWordsNumb(str, atoi(argv[5]));
+                                printf("Chopped String From Left by Words[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                freeZString(choppedStr);
+                            break;
+                            default: 
+                            fprintf(stderr, "Error! Incorrect Arguments => Usage: %s <string1> -cp -l or - r -s or -w <size> or <numOfWords>\n", argv[0]);
+                            exit(1);
+                            }
+                        break;
+                        case 'r':
+                        switch (argv[4][1])
+                            {
+                            case 's':
+                                choppedStr = chopRightBySize(str, atoi(argv[5]));
+                                printf("Chopped String From Left by Size[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                freeZString(choppedStr);
+                            break;
+                            case 'w':
+                                choppedStr = chopRightByWordsNumb(str, atoi(argv[5]));
+                                printf("Chopped String From Left by Words[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                freeZString(choppedStr);
+                            break;
+                            default: 
+                            fprintf(stderr, "Error! Incorrect Arguments => Usage: %s <string1> -cp -l or - r -s or -w <size> or <numOfWords>\n", argv[0]);
+                            exit(1);
+                            }
+                        break;
+                        default: 
+                        fprintf(stderr, "Error! Incorrect Arguments => Usage: %s <string1> -cp -l or - r -s or -w <size> or <numOfWords>\n", argv[0]);
+                        exit(1);
+                    }
+                    break;
                 default:
                     fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> <function>", argv[0]);
                     exit(1);
