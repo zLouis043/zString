@@ -1,18 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 /*
 zString library made by zLouis043
+Check out the documentation on https://github.com/zLouis043/zString
+Use this main.c to test the functionalities of the zstring library.
 */
 
 #define ZSTRING_IMPLEMENTATION
 #include "src/zstring.h"
-
-/*
-
-Use this main.c to test the functionalities of the zstring library.
-
-*/
 
 int main(int argc, char *argv[]){
 
