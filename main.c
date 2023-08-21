@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
                 case 'w':
 
                     if(argc != 5) {
-                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw -s or - i <wordToRemove> \n", argv[0]);
                         exit(1);
                     }
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]){
                 case 'c':
 
                     if(argc != 5) {
-                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc -s or -i <charToRemove> \n", argv[0]);
                         exit(1);
                     }
 
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]){
                 case 'm':
 
                     if(argc != 5) {
-                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm -s or -i <string2> \n", argv[0]);
                         exit(1);
                     }
 
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]){
         case 'o':
 
             if(argc != 5) {
-                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o -s or -i <charToFind>\n", argv[0]);
                 exit(1);
             }
 
@@ -179,7 +179,7 @@ int main(int argc, char *argv[]){
             printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[4][0], occurances);
             break;
         default:
-            fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+            fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> -o -s or -i <charToFind>\n", argv[0]);
             exit(1);
             break;
     }
