@@ -47,6 +47,8 @@ size_t findStartOfWord(zstring str, const char* word);
 size_t numberOfWords(zstring str);
 char toLowerCase(char c);
 char toUpperCase(char c);
+bool isUppercase(char c);
+bool isLowercase(char c);
 bool isLetter(char c);
 bool isNumber(char c);
 bool isSpace(char c);
@@ -188,7 +190,7 @@ size_t numberOfWords(zstring str){
 
 /* Convert the current character to a lowercase one */
 char toLowerCase(char c){
-    if(c >= 'A' && c <= 'Z'){
+    if(isUppercase(c)){
         c += 32;
     }
     return c;
@@ -196,15 +198,25 @@ char toLowerCase(char c){
 
 /* Convert the current character to an uppercase one */
 char toUpperCase(char c){
-    if(c >= 'a' && c <= 'z'){
+    if(isLowercase(c)){
         c -= 32;
     }
     return c;
 }
 
+/* Check if the current character is an uppercase one*/
+bool isUppercase(char c){
+    return (c >= 'A' && c <= 'Z');
+}
+
+/* Check if the current character is an lowercase one*/
+bool isLowercase(char c){
+    return (c >= 'a' && c <= 'z');
+}
+
 /* Check if the current character is a letter */
 bool isLetter(char c){
-    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+    return (isLowercase(c) || isUppercase(c));
 }
 
 /* Check if the current character is a number */
@@ -363,7 +375,7 @@ zstring toLowercaseStr(zstring str){
     size_t i = 0; 
     zstring lstr = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
-        if(str.data[i] >= 'A' && str.data[i] <= 'Z' && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
+        if(isUppercase(str.data[i]) && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
             lstr.data[i] = toLowerCase(str.data[i]); // shift the character to an upper case character to a lower one 
         }else{
             lstr.data[i] = str.data[i];
@@ -388,7 +400,7 @@ zstring toUppercaseStr(zstring str){
     size_t i = 0; 
     zstring ustr = newZString(str.data);
     while(!isNullTerminator(str.data[i])){
-        if(str.data[i] >= 'a' && str.data[i] <= 'z' && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
+        if(isLowercase(str.data[i]) && !isSpace(str.data[i]) && !isNumber(str.data[i]) && !isNewLine(str.data[i])){
             ustr.data[i] = toUpperCase(str.data[i]); // shift the character to an lower case character to a upper one 
         }else {
             ustr.data[i] = str.data[i];
