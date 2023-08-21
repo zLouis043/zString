@@ -961,7 +961,10 @@ zstring chopRightByWordsNumb(zstring str, size_t numOfWords){
     return result;
 }
 
-/* TODO: TO FIX*/
+/*
+    Convert a float to a rationalized string. 
+    Function inspired from https://github.com/kevinboone/rationalize
+*/
 zstring rationalizeFloatToStr(double num, size_t order){
 
     int whole; 
@@ -975,6 +978,12 @@ zstring rationalizeFloatToStr(double num, size_t order){
         negative = true;
         num = -num;
         sign = '-';
+    }
+
+    if(num < 1 && abs(num) > 0){
+        improper = false;
+    }else {
+        improper = true;
     }
 
     if (!improper)
