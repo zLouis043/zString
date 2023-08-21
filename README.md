@@ -114,5 +114,7 @@ make
 
 ```
 
+### Note: It only works with ASCII characters right now. 
+
 
  
