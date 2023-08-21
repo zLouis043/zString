@@ -685,7 +685,7 @@ zstring chopRightByWordsNumb(zstring str, size_t numOfWords){
 
     zstring result;
 
-    int i = 0; int j = 0;            ^
+    int i = 0; int j = 0;            
 
     while(numberOfWords(chopRightBySize(str, i)) > numberOfWords(str) - numOfWords) i++;   // Count the number of words contained 
                                                                                             // in the string and chops it fro the left
