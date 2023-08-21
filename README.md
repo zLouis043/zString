@@ -113,6 +113,13 @@ make
 ./zstring <string> -o -i <charToFind> // Case-Insensitive
 
 ```
+* Convert a float to a rationalized String
+
+```c
+
+./zstring <float> -ra
+
+``` 
 
 ### Note: It only works with ASCII characters right now. 
 
