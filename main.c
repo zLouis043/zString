@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
 zString library made by zLouis043
@@ -106,7 +107,18 @@ int main(int argc, char *argv[]){
                     }
 
                     freeZString(removedChar);
-                    break; 
+                    break;
+                case 'a':
+                    if(argc != 3){
+                        fprintf(stderr, "Error! Not enough arguments => Usage: %s <float> -ra\n", argv[0]);
+                        exit(1);
+                    }
+                    double f = atof(argv[1]);
+                    zstring rationalizedString = rationalizeFloatToStr(f, 3);
+                    printf("Num: %f to Rational string => '%s'\n", f, rationalizedString.data);
+                    freeZString(rationalizedString);
+                    break;
+                     
                 default:
                 fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -re / -rw or -rc <ToRemove> \n", argv[0]);
                 exit(1);
