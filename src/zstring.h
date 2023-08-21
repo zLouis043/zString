@@ -522,7 +522,7 @@ zstring removeCharCI(zstring str, char c){
     zstring l_str = toLowercaseStr(str);
     while(!isNullTerminator(l_str.data[i])){
         if(l_str.data[i] != toLowerCase(c)){
-            result.data[j++] = l_str.data[i]; 
+            result.data[j++] = str.data[i]; 
         }
         i++;
     }
