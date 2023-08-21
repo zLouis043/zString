@@ -31,12 +31,14 @@ SOFTWARE.
 #include <stdarg.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
+#include <stdint.h>
 
 /*! 
     Struct that contains the data pointer of the string and its length. 
     @typedef @struct zstring 
-    @field data The pointer of the string. 
-    @field length The length of the string.
+    @param data The pointer of the string. 
+    @param length The length of the string.
 */
 typedef struct zstring{
     char *data;         
@@ -321,6 +323,15 @@ zstring chopLeftByWordsNumb(zstring str, size_t numOfWords);
 */
 zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
 
+/*!
+    Convert a float to a rationalized string. 
+    Function inspired from https://github.com/kevinboone/rationalize
+    @param num The float to convert
+    @param order The order of precision 
+    @result The zstring rationalized representation of the float 
+*/
+zstring rationalizeFloatToStr(double num, size_t order);
+
 #endif // ZSTRING_H_
 
 #ifdef ZSTRING_IMPLEMENTATION
@@ -587,7 +598,7 @@ zstring newZString(const char* str){
     return result;
 }
 
-/* Create and print a new string that contains all the arguments defined in itself */
+/* Create a new string that contains all the arguments defined in itself */
 zstring printz(size_t addedSize, const char* str, ...){
     zstring result = newZString(str);
     va_list args;
@@ -596,7 +607,6 @@ zstring printz(size_t addedSize, const char* str, ...){
     int n = vsnprintf(result.data, sizeof(char *) * result.length, str, args);
     va_end(args);
     result.length = strlen(result.data);
-    printf("String: '%s' of len %zu\n\n" , result.data, result.length);
     return result;
 }
 
@@ -947,6 +957,102 @@ zstring chopRightByWordsNumb(zstring str, size_t numOfWords){
 
     result.data[j] = '\0';
     result.length = j;
+    return result;
+}
+
+/* TODO: TO FIX*/
+zstring rationalizeFloatToStr(double num, size_t order){
+
+    int whole; 
+    bool negative;
+    bool improper;
+
+    char sign = '+'; 
+    negative = false;
+    if (num < 0) 
+    {
+        negative = true;
+        num = -num;
+        sign = '-';
+    }
+
+    if (!improper)
+    {
+    double frac = num - floor(num);
+    whole = (int) floor(num);
+    num = frac;
+    }
+    else
+    whole = 0;
+
+    // The largest possible value for "order" is 9, because we have
+    //   to be able to fit "10^(order*2)" into the 64-bit integer type
+    //   we are using for computation. 
+    if (order > 9) order = 9;
+
+    // In this version, we scale the original number so that it has at
+    //  least as many non-fraction digits as "order". "scale" is the 
+    //  scaling factor, that will be used throughout the computation.
+    int64_t scale = pow(10, order);
+
+    // Take "x" to be the scaled version of the number to be converted
+    int64_t x = num * scale;
+    int64_t orig_x = x;
+
+    // Calculate the first continued fraction coefficient, but bear in mind
+    //   that it's derived from a number that is "scale" times too large.
+    int64_t a = orig_x / scale; 
+
+    // Previous versions of the numerator and denominator, as in version 1.
+    // (No scaling here)
+    int64_t n = a;
+    int64_t n1 = 1;
+    int64_t n2;
+
+    int64_t d = 1;
+    int64_t d1 = 0;
+    int64_t d2;
+
+    // We expand the continued fraction as in version 1, but we have placed
+    //   a limit "order" on the number of significant figures in the results.
+    // Therefore, we never need to loop more times than order.
+    int loops = 0;
+    while (loops++ < order && x - a * scale)
+    {
+    // In version 1, we had "x = 1 / (x-a)", in floating-point
+    //  numbers. Of course, we can't do this calculation in integers,
+    //  but we can multiplay by the scaling factor "scale". A first
+    //  guess at the logic might be "x = scale / (x / scale - a)", but 
+    //  this fails because "x / scale" is probably zero in integers. So
+    // We need to multiple top and bottom by "scale" to get a version that
+    //  will always succeed in integers. Of course, this limits the
+    //  value of "order", as scale=10^order, and an int64 is only so big.
+    x = scale * scale / (x - a * scale);
+
+    // Calculate the next continued fraction coefficient, again bearing
+    // in mind that it comes from a scaled number. Dividing by "scale"
+    //  is the equivalent in this integer version as taking floor(x) in
+    // version 1.
+    a = x / scale; 
+
+    // The expansion of the continued fraction into numerator and
+    //   denominator is the same as in version 1.
+    n2 = n1; 
+    n1 = n;
+    n = n2 + a * n1;
+
+    d2 = d1; 
+    d1 = d;
+    d = d2 + a * d1;
+
+    // If the value of n/d is _exact_ compared to the original number,
+    //   stop here -- no point looping further, as all the following
+    //   continued fraction coefficients will be zero.
+    if (!d) break;
+    if ( (( scale * n / d - orig_x ) > 0 ? ( scale * n / d - orig_x ) : -( scale * n / d - orig_x )) <= 1) break; 
+    } 
+
+    zstring result = printz(10, "%c%d/%d", sign, n, d);
     return result;
 }
 
