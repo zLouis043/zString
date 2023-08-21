@@ -32,11 +32,16 @@ SOFTWARE.
 #include <string.h>
 #include <stdbool.h>
 
-//Struct that contains the main components of the string  
+/*!
+    @typedef @struct zstring 
+    @discussion Struct that contains the data pointer of the string and its length. 
+    @field data The pointer of the string. 
+    @field length The length of the string.
+*/
 
 typedef struct zstring{
-    char *data;         // Data contained in the string 
-    size_t length;      // Length of the string
+    char *data;         
+    size_t length;      
 }zstring;
 
 /*!  
