@@ -32,13 +32,12 @@ SOFTWARE.
 #include <string.h>
 #include <stdbool.h>
 
-/*!
+/*! 
+    Struct that contains the data pointer of the string and its length. 
     @typedef @struct zstring 
-    @discussion Struct that contains the data pointer of the string and its length. 
     @field data The pointer of the string. 
     @field length The length of the string.
 */
-
 typedef struct zstring{
     char *data;         
     size_t length;      
