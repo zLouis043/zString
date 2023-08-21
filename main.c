@@ -184,9 +184,7 @@ int main(int argc, char *argv[]){
             break;
     }
 
-    
     freeZString(str);
-
 
     return 0;
 }

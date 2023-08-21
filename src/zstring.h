@@ -124,7 +124,7 @@ size_t findOccuranceOfCI(zstring str, char toFind){
                                                 // whenever the word is Upper/Lower-case
     while(!isNullTerminator(toLowCase.data[i])){   
         if(toLowCase.data[i] == toLowerCase(toFind)){
-            occurences++;
+            occurences++; 
         }
         i++;
     }
