@@ -177,58 +177,144 @@ bool isWordInString(zstring str, const char* word, int start);
 */
 bool compareString(zstring str1, zstring str2);
 
-/* Check if two strings are equal (Note: this is a case-insensitive function) */
+/*
+    Check if two strings are equal (Note: this is a case-insensitive function).
+    @param str1 The first string that will be compared with the other string. 
+    @param str2 The second string that will be compared with the other string. 
+    @result True if the strings are equal False if they are not. 
+*/
 bool compareStringCI(zstring str1, zstring str2);
 
-/* Create an empty zstring */
+/* 
+    Create an empty zstring
+    @result An Empty zString with a length of 0 
+*/
 zstring newZNullString();
 
-/* Create a new zstring with its data and its length */
+/* 
+    Create a new zstring with its data and its length.
+    @param str The data that will be contained in the new zstring.
+    @result A new zstring with the data equal to the str and the length equal to the length of the str.
+*/
 zstring newZString(const char* str);
 
-/* Create and print a new string that contains all the arguments defined in itself */
+/* 
+    Create a new string that contains all the arguments defined in itself.
+    @param addedSize The size added to the string
+    @param str The data that will be contained in the new zstring.
+    @param ... Every args that will be formatted in the new zstring.
+    @result A new zstring with formatted args in itself.
+*/
 zstring printz(size_t addedSize, const char* str, ...);
 
-/* Convert all the string to lowercases */
+/* 
+    Convert all the string to lowercases.
+    @param str The string to convert to lowercase.
+    @result The new zstring converted to lowercase.
+*/
 zstring toLowercaseStr(zstring str);
 
-/* Convert all the string to uppercases */
+/* 
+    Convert all the string to uppercases.
+    @param str The string to convert to uppercase.
+    @result The new zstring converted to uppercase.
+*/
 zstring toUppercaseStr(zstring str);
 
-/* This function returns the string without any spaces */
+/* 
+    This function returns the string without any spaces.
+    @param str The string to trim.
+    @result The new zstring without any spaces.
+*/
 zstring trimStr(zstring str);
 
-/* Remove a word from a string (Case-Sensitive) */
+/* 
+    Remove a word from a string (Case-Sensitive).
+    @param str The string in which the word will be removed.
+    @param word The word to remove from the string.
+    @result The zstring without any occurances of that word.
+*/
 zstring removeWord(zstring str, const char* word);
 
-/* Remove a word from a string (Case-Insensitive) */
+/*
+    Remove a word from a string (Case-Insensitive). 
+    @param str The string in which the word will be removed.
+    @param word The word to remove from the string.
+    @result The zstring without any occurances of that word.
+*/
 zstring removeWordCI(zstring str, const char* word);
 
-/* Remove every occurances of a specific character inside the string (Case-Sensitive) */
+/* 
+    Remove every occurances of a specific character inside the string (Case-Sensitive).
+    @param str The string in which the character will be removed.
+    @param c The character to remove from the string.
+    @result The zstring without any occurances of that character.
+*/
 zstring removeChar(zstring str, char c);
 
-/* Remove every occurances of a specific character inside the string (Case-Insensitive) */
+/* 
+    Remove every occurances of a specific character inside the string (Case-Insensitive). 
+    @param str The string in which the character will be removed.
+    @param c The character to remove from the string.
+    @result The zstring without any occurances of that character.
+*/
 zstring removeCharCI(zstring str, char c);
 
-/* Gets a substring from a specific location in the string */
+/* 
+    Gets a substring from a specific location in the string.
+    @param str The string in which the substring will be.
+    @param start The start of the substring.
+    @param end The end of the substring.
+    @result The subString taken from the string from the index start to the index end. 
+*/
 zstring subStr(zstring str,int start, int end);
 
-/* Returns the reversed string */
+/* 
+    Returns the reversed string.
+    @param str The string to reverse.
+    @result The reversed string. 
+
+*/
 zstring reverseStr(zstring str);
 
-/* Concatenates two string */
+/* 
+    Concatenates two string.
+    @param str1 The first part of the new concatenated string.
+    @param str2 The second part of the new concatenated string.
+    @result A new zstring that contains the first and the second string  
+*/
 zstring concatenateStr(zstring str1, zstring str2);
 
-/* Chop the string from the left by a specified size */
+/* 
+    Chop the string from the left by a specified size.
+    @param str The string to chop.
+    @param size The amount of characters to chop off.
+    @result The string with a certain amount of character chopped off from the left. 
+*/
 zstring chopLeftBySize(zstring str, size_t size);
 
-/* Chop the string from the left by a specified size */
+/* 
+    Chop the string from the left by a specified size 
+    @param str The string to chop.
+    @param size The amount of characters to chop off.
+    @result The string with a certain amount of character chopped off from the right. 
+*/
 zstring chopRightBySize(zstring str, size_t size);
 
-/* Chop the string from the left by a specified number of words*/
+/* 
+    Chop the string from the left by a specified number of words.
+    @param str The string to chop.
+    @param numOfWords The amount of words to chop off.
+    @result The string with a certain amount of words chopped off from the left. 
+*/
 zstring chopLeftByWordsNumb(zstring str, size_t numOfWords);
 
-/* Chop the string from the right by a specified number of words*/
+/* 
+    Chop the string from the right by a specified number of words
+    @param str The string to chop.
+    @param numOfWords The amount of words to chop off.
+    @result The string with a certain amount of words chopped off from the right. 
+*/
 zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
 
 #endif // ZSTRING_H_
