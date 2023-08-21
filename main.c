@@ -63,22 +63,22 @@ int main(int argc, char *argv[]){
                     break;
                 case 'w':
 
-                    if(argc != 4) {
+                    if(argc != 5) {
                         fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
                         exit(1);
                     }
 
-                    zstring removedWord = removeWord(str, argv[3]);
+                    zstring removedWord = removeWord(str, argv[4]);
 
-                    switch(argv[2][3]){
+                    switch(argv[3][1]){
                         case 's':
-                        removedWord = removeWord(str, argv[3]);
+                        removedWord = removeWord(str, argv[4]);
                         break;
                         case 'i':
-                        removedWord = removeWordCI(str, argv[3]);
+                        removedWord = removeWordCI(str, argv[4]);
                         break;
                         default:
-                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rw <wordToRemove> \n", argv[0]);
+                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rw -s or - i <wordToRemove> \n", argv[0]);
                         exit(1);
                         break;
                     }
@@ -93,24 +93,24 @@ int main(int argc, char *argv[]){
 
                 case 'c':
 
-                    if(argc != 4) {
+                    if(argc != 5) {
                         fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
                         exit(1);
                     }
 
                     zstring removedChar;
 
-                    switch(argv[2][3]){
+                    switch(argv[3][1]){
                         case 's':
-                            removedChar= removeChar(str, argv[3][0]);
+                            removedChar= removeChar(str, argv[4][0]);
                             printf("String with removed word: '%s'\n", removedChar.data);
                             break;
                         case 'i':
-                            removedChar= removeCharCI(str, argv[3][0]);
+                            removedChar= removeCharCI(str, argv[4][0]);
                             printf("String with removed word: '%s'\n", removedChar.data);
                             break;
                         default:
-                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rc <charToRemove> \n", argv[0]);
+                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -rc -s or -i <charToRemove> \n", argv[0]);
                         exit(1);
                         break;
                     }
@@ -123,20 +123,20 @@ int main(int argc, char *argv[]){
             switch(argv[2][2]){
                 case 'm':
 
-                    if(argc != 4) {
+                    if(argc != 5) {
                         fprintf(stderr, "Error! Not enough arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
                         exit(1);
                     }
 
-                    switch(argv[2][3]){
+                    switch(argv[3][1]){
                         case 's':
-                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareString(str, newZString(argv[3])) ? "True" : "False");
+                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareString(str, newZString(argv[4])) ? "True" : "False");
                         break;
                         case 'i':
-                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[3])) ? "True" : "False");
+                        printf("Are '%s' and '%s' equal? %s\n", str.data, argv[3], compareStringCI(str, newZString(argv[4])) ? "True" : "False");
                         break;
                         default:
-                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string1> -cm <string2> \n", argv[0]);
+                        fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string1> -cm -s or -i <string2> \n", argv[0]);
                         exit(1);
                         break;
                     }
@@ -163,26 +163,26 @@ int main(int argc, char *argv[]){
             break;
         case 'o':
 
-            if(argc != 4) {
-                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+            if(argc != 5) {
+                fprintf(stderr, "Error! Not enough arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
                 exit(1);
             }
 
             size_t occurances = 0;
 
-            switch(argv[2][2]){
+            switch(argv[3][1]){
                 case 's':
-                occurances = findOccuranceOf(str, argv[3][0]);
+                occurances = findOccuranceOf(str, argv[4][0]);
                 break;
                 case 'i':
-                occurances = findOccuranceOfCI(str, argv[3][0]);
+                occurances = findOccuranceOfCI(str, argv[4][0]);
                 break;
                 default:
-                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -o <charToFind>\n", argv[0]);
+                fprintf(stderr, "Error! Incorrect arguments => Usage: %s <string> -o -s or -i <charToFind>\n", argv[0]);
                 exit(1);
                 break;
             }
-            printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[3][0], occurances);
+            printf("In the string: '%s' the '%c' occures %zu times\n", str.data, argv[4][0], occurances);
             break;
         default:
             fprintf(stderr,"Error! Incorrect Arguments => Usage: %s <string> <function>", argv[0]);
