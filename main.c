@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-    zstring str = newZString(argv[1]);
+    zstring str =  newZString(argv[1]);
 
     switch(argv[2][1]){
         case 'l': 
