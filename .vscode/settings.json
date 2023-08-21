@@ -12,6 +12,7 @@
     ],
     "cmake.configureOnOpen": false,
     "files.associations": {
-        "zstring.h": "c"
+        "zstring.h": "c",
+        "stdio.h": "c"
     }
 }

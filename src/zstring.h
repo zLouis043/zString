@@ -59,6 +59,7 @@ bool isStringNull(zstring str);
 bool isWordInString(zstring str, const char* word, int start);
 bool compareString(zstring str1, zstring str2);
 bool compareStringCI(zstring str1, zstring str2);
+zstring newZNullString();
 zstring newZString(const char* str);
 zstring printz(size_t addedSize, const char* str, ...);
 zstring toLowercaseStr(zstring str);
@@ -312,7 +313,15 @@ bool compareStringCI(zstring str1, zstring str2){
     return true;
 }
 
-/* Create a new string with its data and its length */
+/* Create an empty zstring */
+zstring newZNullString(){
+    zstring result;
+    result.data = '\0';
+    result.length = 0;
+    return result;
+}
+
+/* Create a new zstring with its data and its length */
 zstring newZString(const char* str){
     zstring result;
     result.data = malloc(strlen(str) + 1);    //allocate memory for the string
