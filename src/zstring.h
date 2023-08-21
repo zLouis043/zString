@@ -73,6 +73,8 @@ zstring reverseStr(zstring str);
 zstring concatenateStr(zstring str1, zstring str2);
 zstring chopLeftBySize(zstring str, size_t size);
 zstring chopRightBySize(zstring str, size_t size);
+zstring chopLeftByWordsNumb(zstring str, size_t numOfWords);
+zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
 
 #endif // ZSTRING_H_
 
@@ -596,7 +598,8 @@ zstring chopLeftBySize(zstring str, size_t size){
         exit(1);
     }
 
-    zstring result = newZString(str.data);
+    zstring result;
+    result.data = malloc(str.length - size); 
     int i = size; int j = 0;
     while(!isNullTerminator(str.data[i])){
         result.data[j] = str.data[i];
@@ -622,7 +625,8 @@ zstring chopRightBySize(zstring str, size_t size){
         exit(1);
     }
 
-    zstring result = newZString(str.data);
+    zstring result;
+    result.data = malloc(str.length - size);
     int i = 0; 
     while(!isNullTerminator(str.data[i]) && i < str.length - size){ // copy the string until the requested size
         result.data[i] = str.data[i];
@@ -630,7 +634,73 @@ zstring chopRightBySize(zstring str, size_t size){
 
     }
     result.data[i] = '\0';
-    result.data = realloc(result.data, strlen(result.data));
+    return result;
+}
+
+/* Chop the string from the left by a specified number of words*/
+zstring chopLeftByWordsNumb(zstring str, size_t numOfWords){
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
+    if(numOfWords > numberOfWords(str)){
+        fprintf(stderr, "Error! Number of words requested is larger than the number of words contained in the string\n");
+        exit(1);
+    }
+
+    zstring result;
+
+    int i = 0; int j = 0; 
+
+    while(numberOfWords(chopLeftBySize(str, i)) >= numberOfWords(str) - numOfWords) i++;    // Count the number of words contained 
+                                                                                            // in the string and chops it fro the left
+                                                                                            // until it removes the requested number
+                                                                                            // of words
+
+    result.data = malloc( str.length - i );
+
+    while(!isNullTerminator(str.data[i])){
+        result.data[j] = str.data[i];
+        j++;
+        i++;
+    }
+
+    result.data[j] = '\0';
+    result.length = j;
+    return result;
+}
+
+/* Chop the string from the right by a specified number of words*/
+zstring chopRightByWordsNumb(zstring str, size_t numOfWords){
+    if(isStringNull(str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
+    if(numOfWords > numberOfWords(str)){
+        fprintf(stderr, "Error! Number of words requested is larger than the number of words contained in the string\n");
+        exit(1);
+    }
+
+    zstring result;
+
+    int i = 0; int j = 0;            ^
+
+    while(numberOfWords(chopRightBySize(str, i)) > numberOfWords(str) - numOfWords) i++;   // Count the number of words contained 
+                                                                                            // in the string and chops it fro the left
+                                                                                            // until it removes the requested number
+                                                                                            // of words
+
+    result.data = malloc( str.length - i );
+
+    while(j < str.length - i){
+        result.data[j] = str.data[j];
+        j++;
+    }
+
+    result.data[j] = '\0';
+    result.length = j;
     return result;
 }
 
