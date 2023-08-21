@@ -39,41 +39,185 @@ typedef struct zstring{
     size_t length;      // Length of the string
 }zstring;
 
+/*  
+    This function frees the zstring and sets its length to 0.
+    @param str The string that need to be freed. 
+*/
 void freeZString(zstring str);
+
+/* 
+    This function copies the str1 to str2.
+    @param str1 The source string.
+    @param str2 The destination string. 
+*/
 void copyStr(zstring str1, zstring str2);
+
+/* 
+    This function returns the number of occurances of a specific character inside of a string (Case-Sensitive).
+    @param str The string that will be searched into.
+    @param toFind The character that will be searched into the string.
+    @result The number of occurrences of the character.
+*/
 size_t findOccuranceOf(zstring str, char toFind);
+
+/* 
+    This function returns the number of occurances of a specific character inside of a string (Case-Insensitive).
+    @param str The string that will be searched into.
+    @param toFind The character that will be searched into the string.
+    @result The number of occurrences of the character. 
+*/
 size_t findOccuranceOfCI(zstring str, char toFind);
+
+/* 
+    This function returns the index of where a word occurs within a string.
+    @param str The string that will be searched into.
+    @param word The word that will be searched.
+    @result The index of where the word is in the string.  
+*/
 size_t findStartOfWord(zstring str, const char* word);
+
+/* 
+    This function the number of word inside of a string.
+    @param str The string where the words will be counted.
+    @result The number of words inside the string. 
+*/
 size_t numberOfWords(zstring str);
+
+/*
+    Convert the current character to a lowercase one. 
+    @param c The character to be converted.
+    @result The converted lowercase character.
+*/
 char toLowerCase(char c);
+
+/*
+    Convert the current character to a uppercase one. 
+    @param c The character to be converted.
+    @result The converted uppercase character.
+*/
 char toUpperCase(char c);
+
+/* 
+    Check if the current character is an uppercase one.
+    @param c The character to be checked.
+    @result True if the character is an uppercase one or False if it is not.
+*/
 bool isUppercase(char c);
+
+/* 
+    Check if the current character is an lowercase one.
+    @param c The character to be checked.
+    @result True if the character is an lowercase one or False if it is not.
+*/
 bool isLowercase(char c);
+
+/* 
+    Check if the current character is a letter.
+    @param c The character to be checked.
+    @result True if the character is a letter or False if it is not.
+*/
 bool isLetter(char c);
+
+/*
+    Check if the current character is a number.
+    @param c The character to be checked.
+    @result True if the character is a number or False if it is not. 
+*/
 bool isNumber(char c);
+
+/* 
+    Check if the current character is a space.
+    @param c The character to be checked.
+    @result True if the character is a space or False if it is not. 
+*/
 bool isSpace(char c);
+
+/*
+    Check if the current character is a Special Symbol.
+    @param c The character to be checked.
+    @result True if the character is a Special Symbol or False if it is not.
+*/
 bool isSymbol(char c);
+
+/*
+    Check if the current character is a Null Terminator char ('\0').
+    @param c The character to be checked.
+    @result True if the character is a Null Terminator or False if it is not. 
+*/
 bool isNullTerminator(char c);
+
+/* 
+    Check if the current character is a new line char ('\n').
+    @param c The character to be checked.
+    @result True if the character is a New Line or False if it is not. 
+*/
 bool isNewLine(char c);
+
+/*
+    Check if the current string is a null one.
+    @param str The string to be checked.
+    @result True if the string is null or False if it is not. 
+*/
 bool isStringNull(zstring str);
+
+/* Checks if a word is contained in the string or not */
 bool isWordInString(zstring str, const char* word, int start);
+
+/* Check if two strings are equal (Note: this is a case-sensitive function) */
 bool compareString(zstring str1, zstring str2);
+
+/* Check if two strings are equal (Note: this is a case-insensitive function) */
 bool compareStringCI(zstring str1, zstring str2);
+
+/* Create an empty zstring */
 zstring newZNullString();
+
+/* Create a new zstring with its data and its length */
 zstring newZString(const char* str);
+
+/* Create and print a new string that contains all the arguments defined in itself */
 zstring printz(size_t addedSize, const char* str, ...);
+
+/* Convert all the string to lowercases */
 zstring toLowercaseStr(zstring str);
+
+/* Convert all the string to uppercases */
 zstring toUppercaseStr(zstring str);
+
+/* This function returns the string without any spaces */
 zstring trimStr(zstring str);
+
+/* Remove a word from a string (Case-Sensitive) */
 zstring removeWord(zstring str, const char* word);
+
+/* Remove a word from a string (Case-Insensitive) */
+zstring removeWordCI(zstring str, const char* word);
+
+/* Remove every occurances of a specific character inside the string (Case-Sensitive) */
 zstring removeChar(zstring str, char c);
+
+/* Remove every occurances of a specific character inside the string (Case-Insensitive) */
 zstring removeCharCI(zstring str, char c);
+
+/* Gets a substring from a specific location in the string */
 zstring subStr(zstring str,int start, int end);
+
+/* Returns the reversed string */
 zstring reverseStr(zstring str);
+
+/* Concatenates two string */
 zstring concatenateStr(zstring str1, zstring str2);
+
+/* Chop the string from the left by a specified size */
 zstring chopLeftBySize(zstring str, size_t size);
+
+/* Chop the string from the left by a specified size */
 zstring chopRightBySize(zstring str, size_t size);
+
+/* Chop the string from the left by a specified number of words*/
 zstring chopLeftByWordsNumb(zstring str, size_t numOfWords);
+
+/* Chop the string from the right by a specified number of words*/
 zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
 
 #endif // ZSTRING_H_
@@ -242,6 +386,7 @@ bool isNewLine(char c){
     return (c == '\n');
 }
 
+/* Check if the current string is a null one*/
 bool isStringNull(zstring str){
     return (str.data == NULL || str.length == 0);
 }
