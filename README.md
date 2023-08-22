@@ -26,7 +26,7 @@ cd bin
 make 
 ./zstring <string>
  
-Output> String: '<string' of length <lenOfString>
+Output> String: '<string>' of length <lenOfString>
 
 ```
 
