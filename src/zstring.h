@@ -46,6 +46,15 @@ typedef struct zstring{
     size_t length;      
 }zstring;
 
+
+/*!
+    Check if the memory for the string is allocated.
+    @param str The string to check
+    @param line The line number where the string is allocated
+    @param filename The name of the file where the string is
+*/
+void getAllocError(const char* str, size_t line, const char* filename);
+
 /*!  
     This function frees the zstring and sets its length to 0.
     @param str The string that need to be freed. 
@@ -203,7 +212,7 @@ zstring newZNullString();
     @param str The data that will be contained in the new zstring.
     @result A new zstring with the data equal to the str and the length equal to the length of the str.
 */
-zstring newZString(const char* str);
+zstring newZStringDebug(const char* str, size_t line, const char* filename);
 
 /*! 
     Create a new string that contains all the arguments defined in itself.
@@ -212,7 +221,7 @@ zstring newZString(const char* str);
     @param ... Every args that will be formatted in the new zstring.
     @result A new zstring with formatted args in itself.
 */
-zstring printz(size_t addedSize, const char* str, ...);
+zstring printzDebug(size_t addedSize, size_t line, const char* filename, const char* str, ...);
 
 /*! 
     Convert all the string to lowercases.
@@ -333,9 +342,21 @@ zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
 */
 zstring rationalizeFloatToStr(double num, size_t order);
 
+#define newZString(str) newZStringDebug(str, __LINE__, __FILE__)
+#define printz(addedSize, str, ...) printzDebug(addedSize, __LINE__, __FILE__, str, __VA_ARGS__)
+
 #endif // ZSTRING_H_
 
 #ifdef ZSTRING_IMPLEMENTATION
+
+/* Checks if the memory is allocated correctly */
+void getAllocError(const char* str, size_t line, const char* filename){
+    if(str == NULL){    // checks if the malloc failed 
+        printf("Error! In '%s' al line %zu => Could not allocate memory for the new ZString. Quitting.\n", filename, line);
+        exit(1);
+    }
+}
+
 
 /* Free the string and sets its length to 0 */
 void freeZString(zstring str){
@@ -584,14 +605,11 @@ zstring newZNullString(){
 }
 
 /* Create a new zstring with its data and its length */
-zstring newZString(const char* str){
+zstring newZStringDebug(const char* str, size_t line, const char* filename){
     zstring result;
     result.data = malloc(strlen(str) + 1);    //allocate memory for the string
 
-    if(result.data == NULL){    // checks if the malloc failed 
-        fprintf(stderr, "Could not allocate memory for the new ZString. Quitting.\n");
-        exit(1);
-    }
+    getAllocError(result.data, line, filename);
 
     strcpy(result.data, str);
     result.length = strlen(result.data); // calculate the length of the string 
@@ -600,11 +618,14 @@ zstring newZString(const char* str){
 }
 
 /* Create a new string that contains all the arguments defined in itself */
-zstring printz(size_t addedSize, const char* str, ...){
+zstring printzDebug(size_t addedSize, size_t line, const char* filename, const char* str, ...){
     zstring result = newZString(str);
     va_list args;
     va_start(args, str);
     result.data = realloc(result.data,result.length + addedSize);
+
+    getAllocError(result.data, line, filename);
+
     int n = vsnprintf(result.data, sizeof(char *) * result.length, str, args);
     va_end(args);
     result.length = strlen(result.data);
@@ -1031,7 +1052,7 @@ zstring rationalizeFloatToStr(double num, size_t order){
     {
     // In version 1, we had "x = 1 / (x-a)", in floating-point
     //  numbers. Of course, we can't do this calculation in integers,
-    //  but we can multiplay by the scaling factor "scale". A first
+    //  but we can multiply by the scaling factor "scale". A first
     //  guess at the logic might be "x = scale / (x / scale - a)", but 
     //  this fails because "x / scale" is probably zero in integers. So
     // We need to multiple top and bottom by "scale" to get a version that
