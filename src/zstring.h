@@ -46,7 +46,6 @@ typedef struct zstring{
     size_t length;      
 }zstring;
 
-
 /*!
     Check if the memory for the string is allocated.
     @param str The string to check.
