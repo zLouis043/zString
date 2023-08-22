@@ -12,12 +12,17 @@ Use this main.c to test the functionalities of the zstring library.
 
 int main(int argc, char *argv[]){
 
-    if(argc < 3){
+    if(argc < 2){
         fprintf(stderr,"Error! Not Enough Arguments => Usage: %s <string> <function>", argv[0]);
         exit(1);
     }
 
     zstring str =  newZString(argv[1]);
+
+    if(argc == 2){
+        printf("String: '%s' of length %zu", str.data, str.length);
+        return 0;
+    }
 
     switch(argv[2][1]){
         case 'l': 
