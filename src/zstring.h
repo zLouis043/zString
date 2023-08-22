@@ -49,9 +49,9 @@ typedef struct zstring{
 
 /*!
     Check if the memory for the string is allocated.
-    @param str The string to check
-    @param line The line number where the string is allocated
-    @param filename The name of the file where the string is
+    @param str The string to check.
+    @param line The line number where the string is allocated.
+    @param filename The name of the file where the string is.
 */
 void getAllocError(const char* str, size_t line, const char* filename);
 
