@@ -209,6 +209,8 @@ zstring newZNullString();
 /*! 
     Create a new zstring with its data and its length.
     @param str The data that will be contained in the new zstring.
+    @param line The line number where the new zstring is created.
+    @param filename The name of the file where the new zstring is created.
     @result A new zstring with the data equal to the str and the length equal to the length of the str.
 */
 zstring newZStringDebug(const char* str, size_t line, const char* filename);
@@ -341,7 +343,20 @@ zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
 */
 zstring rationalizeFloatToStr(double num, size_t order);
 
+/*! 
+    Create a new zstring with its data and its length.
+    @param str The data that will be contained in the new zstring.
+    @result A new zstring with the data equal to the str and the length equal to the length of the str.
+*/
 #define newZString(str) newZStringDebug(str, __LINE__, __FILE__)
+
+/*! 
+    Create a new string that contains all the arguments defined in itself.
+    @param addedSize The size added to the string
+    @param str The data that will be contained in the new zstring.
+    @param ... Every args that will be formatted in the new zstring.
+    @result A new zstring with formatted args in itself.
+*/
 #define printz(addedSize, str, ...) printzDebug(addedSize, __LINE__, __FILE__, str, __VA_ARGS__)
 
 #endif // ZSTRING_H_
