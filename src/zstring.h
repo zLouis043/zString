@@ -352,7 +352,7 @@ zstring rationalizeFloatToStr(double num, size_t order);
 
 /*! 
     Create a new string that contains all the arguments defined in itself.
-    @param addedSize (size_t) The size added to the string
+    @param addedSize (size_t) The size added to the string.
     @param str (const char*) The data that will be contained in the new zstring.
     @param ... Every args that will be formatted in the new zstring.
     @result A new zstring with formatted args in itself.
