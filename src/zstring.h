@@ -345,15 +345,15 @@ zstring rationalizeFloatToStr(double num, size_t order);
 
 /*! 
     Create a new zstring with its data and its length.
-    @param str The data that will be contained in the new zstring.
+    @param str (const char*) The data that will be contained in the new zstring.
     @result A new zstring with the data equal to the str and the length equal to the length of the str.
 */
 #define newZString(str) newZStringDebug(str, __LINE__, __FILE__)
 
 /*! 
     Create a new string that contains all the arguments defined in itself.
-    @param addedSize The size added to the string
-    @param str The data that will be contained in the new zstring.
+    @param addedSize (size_t) The size added to the string
+    @param str (const char*) The data that will be contained in the new zstring.
     @param ... Every args that will be formatted in the new zstring.
     @result A new zstring with formatted args in itself.
 */
