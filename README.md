@@ -113,6 +113,18 @@ make
 ./zstring <string> -o -i <charToFind> // Case-Insensitive
 
 ```
+* Chop a string from left or right and even by a specific size or a specific number of words
+
+```c
+
+./zstring <string> -cp -l -s <sizeToChop> // the flag -l indicates from left and the flag -s indicates by size 
+./zstring <string> -cp -l -w <numOfWordsToChop> // the flag -l indicates from left and the flag -w by number of words
+
+./zstring <string> -cp -r -s <sizeToChop> // the flag -l indicates from right and the flag -s indicates by size 
+./zstring <string> -cp -r -w <numOfWordsToChop> // the flag -l indicates from right and the flag -w by number of words
+
+```
+
 * Convert a float to a rationalized String
 
 ```c
