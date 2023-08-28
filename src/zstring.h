@@ -68,6 +68,14 @@ void freeZString(zstring str);
 void copyStr(zstring str1, zstring str2);
 
 /*! 
+    This function copies the str1 to str2 by a certain amount of characters.
+    @param str1 The source string.
+    @param str2 The destination string. 
+    @param len The number of characters to copy.
+*/
+void copyNStr(zstring str1, zstring str2, size_t len);
+
+/*! 
     This function returns the number of occurances of a specific character inside of a string (Case-Sensitive).
     @param str The string that will be searched into.
     @param toFind The character that will be searched into the string.
@@ -213,7 +221,7 @@ zstring newZNullString();
     @param filename The name of the file where the new zstring is created.
     @result A new zstring with the data equal to the str and the length equal to the length of the str.
 */
-zstring newZStringDebug(const char* str, size_t line, const char* filename);
+zstring _newZString(const char* str, size_t line, const char* filename);
 
 /*! 
     Create a new string that contains all the arguments defined in itself.
@@ -222,7 +230,7 @@ zstring newZStringDebug(const char* str, size_t line, const char* filename);
     @param ... Every args that will be formatted in the new zstring.
     @result A new zstring with formatted args in itself.
 */
-zstring printzDebug(size_t addedSize, size_t line, const char* filename, const char* str, ...);
+zstring _printz(size_t addedSize, size_t line, const char* filename, const char* str, ...);
 
 /*! 
     Convert all the string to lowercases.
@@ -306,33 +314,33 @@ zstring concatenateStr(zstring str1, zstring str2);
     Chop the string from the left by a specified size.
     @param str The string to chop.
     @param size The amount of characters to chop off.
-    @result The string with a certain amount of character chopped off from the left. 
+    @result The substring chopped off the main string starting from left the by a certain size. 
 */
-zstring chopLeftBySize(zstring str, size_t size);
+zstring chopLeftBySize(zstring *str, size_t size);
 
 /*! 
     Chop the string from the left by a specified size 
     @param str The string to chop.
     @param size The amount of characters to chop off.
-    @result The string with a certain amount of character chopped off from the right. 
+    @result The substring chopped off the main string starting from right the by a certain size.
 */
-zstring chopRightBySize(zstring str, size_t size);
+zstring chopRightBySize(zstring *str, size_t size);
 
 /*! 
     Chop the string from the left by a specified number of words.
     @param str The string to chop.
     @param numOfWords The amount of words to chop off.
-    @result The string with a certain amount of words chopped off from the left. 
+    @result The substring chopped off the main string starting from left the by a certain word number.
 */
-zstring chopLeftByWordsNumb(zstring str, size_t numOfWords);
+zstring chopLeftByWordsNumb(zstring *str, size_t numOfWords);
 
 /*! 
-    Chop the string from the right by a specified number of words
+    Chop the string from the right by a specified number of words.
     @param str The string to chop.
     @param numOfWords The amount of words to chop off.
-    @result The string with a certain amount of words chopped off from the right. 
+    @result The substring chopped off the main string starting from right the by a certain word number.
 */
-zstring chopRightByWordsNumb(zstring str, size_t numOfWords);
+zstring chopRightByWordsNumb(zstring *str, size_t numOfWords);
 
 /*!
     Convert a float to a rationalized string. 
@@ -348,7 +356,7 @@ zstring rationalizeFloatToStr(double num, size_t order);
     @param str (const char*) The data that will be contained in the new zstring.
     @result A new zstring with the data equal to the str and the length equal to the length of the str.
 */
-#define newZString(str) newZStringDebug(str, __LINE__, __FILE__)
+#define newZString(str) _newZString(str, __LINE__, __FILE__)
 
 /*! 
     Create a new string that contains all the arguments defined in itself.
@@ -357,7 +365,7 @@ zstring rationalizeFloatToStr(double num, size_t order);
     @param ... Every args that will be formatted in the new zstring.
     @result A new zstring with formatted args in itself.
 */
-#define printz(addedSize, str, ...) printzDebug(addedSize, __LINE__, __FILE__, str, __VA_ARGS__)
+#define printz(addedSize, str, ...) _printz(addedSize, __LINE__, __FILE__, str, __VA_ARGS__)
 
 #endif // ZSTRING_H_
 
@@ -384,6 +392,13 @@ void copyStr(zstring str1, zstring str2){
     if(isStringNull(str1)) return;
     strcpy(str2.data, str1.data);
     str2.length = str1.length;
+}
+
+/* Copy a string to another by a certain amount of characters*/
+void copyNStr(zstring str1, zstring str2, size_t len){
+    if(isStringNull(str1)) return;
+    strncpy(str2.data, str1.data, len);
+    str2.length = len;
 }
 
 /* This function returns the number of occurances of a specific character inside of a string (Case-sensitive) */
@@ -619,7 +634,7 @@ zstring newZNullString(){
 }
 
 /* Create a new zstring with its data and its length */
-zstring newZStringDebug(const char* str, size_t line, const char* filename){
+zstring _newZString(const char* str, size_t line, const char* filename){
     zstring result;
     result.data = malloc(strlen(str) + 1);    //allocate memory for the string
 
@@ -632,7 +647,7 @@ zstring newZStringDebug(const char* str, size_t line, const char* filename){
 }
 
 /* Create a new string that contains all the arguments defined in itself */
-zstring printzDebug(size_t addedSize, size_t line, const char* filename, const char* str, ...){
+zstring _printz(size_t addedSize, size_t line, const char* filename, const char* str, ...){
     zstring result = newZString(str);
     va_list args;
     va_start(args, str);
@@ -822,7 +837,12 @@ zstring subStr(zstring str,int start, int end){
         exit(1);
     }
 
-    zstring result = newZString("");
+    if(start < 0 || end > str.length){
+        printf("Error! End of string is greater than string length\n");
+        exit(1);
+    }
+
+    zstring result;
     result.data = malloc((end - start) + 1);
     result.length = end - start;
     size_t j = 0;
@@ -878,122 +898,132 @@ zstring concatenateStr(zstring str1, zstring str2){
 }
 
 /* Chop the string from the left by a specified size */
-zstring chopLeftBySize(zstring str, size_t size){
+zstring chopLeftBySize(zstring *str, size_t size){
 
-    if(isStringNull(str)){
+    if(isStringNull(*str)){
         fprintf(stderr, "Error! String is null\n");
         exit(1);
     }
 
-    if(size > str.length){
+    if(size > str->length){
         fprintf(stderr, "Error! Size requested is larger than string length\n");
         exit(1);
     }
 
     zstring result;
-    result.data = malloc(str.length - size); 
-    int i = size; int j = 0;
-    while(!isNullTerminator(str.data[i])){
-        result.data[j] = str.data[i];
-        j++;
-        i++;
+    result.data = malloc(size);
+    copyNStr(*str, result, size);
+    result.length = size;
+    result.data[size] = '\0';
 
+    if(str->length - size == 0){
+        str->length = 1;
+        str->data = realloc(str->data, sizeof(char));
+        str->data = " ";
+        return result;
     }
-    result.data[j] = '\0';
-    result.data = realloc(result.data, strlen(result.data));
+
+    str->data = realloc(str->data, str->length - size); 
+    str->data += size;
+    str->length -= size;
+
     return result;
+
 }
 
 /* Chop the string from the right by a specified size */
-zstring chopRightBySize(zstring str, size_t size){
+zstring chopRightBySize(zstring *str, size_t size){
 
-    if(isStringNull(str)){
+    if(isStringNull(*str)){
         fprintf(stderr, "Error! String is null\n");
         exit(1);
     }
 
-    if(size > str.length){
+    if(size > str->length){
         fprintf(stderr, "Error! Size requested is larger than string length\n");
         exit(1);
     }
 
     zstring result;
-    result.data = malloc(str.length - size);
-    int i = 0; 
-    while(!isNullTerminator(str.data[i]) && i < str.length - size){ // copy the string until the requested size
-        result.data[i] = str.data[i];
-        i++;
+    result.length = size;
+    result.data = malloc(size);
+    copyNStr(*str, result, str->length);
+    result.data += str->length - size;
+    result.data[result.length] = '\0';
 
+
+    if(str->length - size == 0){
+        str->length = 1;
+        str->data = realloc(str->data, sizeof(char));
+        str->data = " ";
+        return result;
     }
-    result.data[i] = '\0';
+
+    str->length -= size ;
+    str->data = realloc(str->data, str->length); 
+    str->data[str->length] = '\0';
+
+
     return result;
+
 }
 
 /* Chop the string from the left by a specified number of words*/
-zstring chopLeftByWordsNumb(zstring str, size_t numOfWords){
-    if(isStringNull(str)){
+zstring chopLeftByWordsNumb(zstring *str, size_t numOfWords){
+    if(isStringNull(*str)){
         fprintf(stderr, "Error! String is null\n");
         exit(1);
     }
 
-    if(numOfWords > numberOfWords(str)){
+    if(numOfWords > numberOfWords(*str)){
         fprintf(stderr, "Error! Number of words requested is larger than the number of words contained in the string\n");
         exit(1);
     }
 
     zstring result;
 
-    int i = 0; int j = 0; 
+    size_t n = 0; int sz = -1;
 
-    while(numberOfWords(chopLeftBySize(str, i)) >= numberOfWords(str) - numOfWords) i++;    // Count the number of words contained 
-                                                                                            // in the string and chops it fro the left
-                                                                                            // until it removes the requested number
-                                                                                            // of words
-
-    result.data = malloc( str.length - i );
-
-    while(!isNullTerminator(str.data[i])){
-        result.data[j] = str.data[i];
-        j++;
-        i++;
+    while(!isNullTerminator(str->data[sz++]) && n < numOfWords){
+        if(isSpace(str->data[sz]) && !isSpace(str->data[sz+1])) n++;
     }
 
-    result.data[j] = '\0';
-    result.length = j;
+    sz--;
+
+    result = chopLeftBySize(str, sz);
+    
     return result;
+
 }
 
 /* Chop the string from the right by a specified number of words*/
-zstring chopRightByWordsNumb(zstring str, size_t numOfWords){
-    if(isStringNull(str)){
+zstring chopRightByWordsNumb(zstring *str, size_t numOfWords){
+
+    if(isStringNull(*str)){
         fprintf(stderr, "Error! String is null\n");
         exit(1);
     }
 
-    if(numOfWords > numberOfWords(str)){
+    if(numOfWords > numberOfWords(*str)){
         fprintf(stderr, "Error! Number of words requested is larger than the number of words contained in the string\n");
         exit(1);
     }
 
     zstring result;
 
-    int i = 0; int j = 0;            
+    size_t n = 0; size_t sz = 1;
 
-    while(numberOfWords(chopRightBySize(str, i)) > numberOfWords(str) - numOfWords) i++;   // Count the number of words contained 
-                                                                                            // in the string and chops it fro the left
-                                                                                            // until it removes the requested number
-                                                                                            // of words
-
-    result.data = malloc( str.length - i );
-
-    while(j < str.length - i){
-        result.data[j] = str.data[j];
-        j++;
+    while((str->length - sz) > 0 && n < numOfWords){
+        sz++;
+        if(!isSpace(str->data[str->length - sz]) && isSpace(str->data[str->length - sz - 1])) n++;
     }
 
-    result.data[j] = '\0';
-    result.length = j;
+    printf("Size : %zu\n", sz);
+
+    result = chopRightBySize(str, sz);
+    
     return result;
+
 }
 
 /*

@@ -173,13 +173,13 @@ int main(int argc, char *argv[]){
                             switch (argv[4][1])
                             {
                             case 's':
-                                choppedStr = chopLeftBySize(str, atoi(argv[5]));
-                                printf("Chopped String From Left by Size[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                choppedStr = chopLeftBySize(&str, atoi(argv[5]));
+                                printf("Taken string '%s' and chopped the string to '%s'\n",choppedStr.data, str.data);
                                 freeZString(choppedStr);
                             break;
                             case 'w':
-                                choppedStr = chopLeftByWordsNumb(str, atoi(argv[5]));
-                                printf("Chopped String From Left by Words[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                choppedStr = chopLeftByWordsNumb(&str, atoi(argv[5]));
+                                printf("Taken string '%s' and chopped the string to '%s' to length: %zu \n",choppedStr.data, str.data, str.length);
                                 freeZString(choppedStr);
                             break;
                             default: 
@@ -191,13 +191,13 @@ int main(int argc, char *argv[]){
                         switch (argv[4][1])
                             {
                             case 's':
-                                choppedStr = chopRightBySize(str, atoi(argv[5]));
-                                printf("Chopped String From Left by Size[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                choppedStr = chopRightBySize(&str, atoi(argv[5]));
+                                printf("Taken string '%s' and chopped the string to '%s'\n",choppedStr.data, str.data);
                                 freeZString(choppedStr);
                             break;
                             case 'w':
-                                choppedStr = chopRightByWordsNumb(str, atoi(argv[5]));
-                                printf("Chopped String From Left by Words[%zu]: '%s'\n", atoi(argv[5]), choppedStr.data);
+                                choppedStr = chopRightByWordsNumb(&str, atoi(argv[5]));
+                                printf("Taken string '%s' and chopped the string to '%s'\n",choppedStr.data, str.data);
                                 freeZString(choppedStr);
                             break;
                             default: 
