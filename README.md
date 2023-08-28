@@ -20,11 +20,11 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ### How to setup the test file
 
-```c
+```console
 
-cd bin
-make 
-./zstring <string>
+$ cd bin
+$ make 
+$ ./zstring <string>
  
 Output> String: '<string>' of length <lenOfString>
 
@@ -34,104 +34,104 @@ Output> String: '<string>' of length <lenOfString>
 
 * Trim a string
 
-```c
+```console
 
-./zstring <string> -tr 
+$ ./zstring <string> -tr 
 
 ```
 
 * Convert all characters to all lowercases
 
-```c
+```console
 
-./zstring <string> -tl 
+$ ./zstring <string> -tl 
 
 ```
 
 * Convert all characters to all uppercases
 
-```c
+```console
 
-./zstring <string> -tu 
+$ ./zstring <string> -tu 
 
 ```
 
 * Reverse a string
 
-```c
+```console
 
-./zstring <string> -re 
+$ ./zstring <string> -re 
 
 ```
 
 * Remove a word from another string
 
-```c
+```console
 
-./zstring <string> -rw -s <wordToRemove> // Case-Sensitive
-./zstring <string> -rw -i <wordToRemove> // Case-Insensitive
+$ ./zstring <string> -rw -s <wordToRemove> // Case-Sensitive
+$ ./zstring <string> -rw -i <wordToRemove> // Case-Insensitive
 
 ```
 
 * Remove every occurences of a character inside of a string
 
-```c
+```console
 
-./zstring <string> -rc -s <charToRemove> // Case-Sensitive
-./zstring <string> -rc -i <charToRemove> // Case-Insensitive
+$ ./zstring <string> -rc -s <charToRemove> // Case-Sensitive
+$ ./zstring <string> -rc -i <charToRemove> // Case-Insensitive
 
 ```
 
 * Compare two strings (Case-Sensitive and Case-Insensitive)
 
-```c
+```console
 
-./zstring <string1> -cm -s <string2> // Case-Sensitive
-./zstring <string1> -cm -i <string2> // Case-Insensitive
+$ ./zstring <string1> -cm -s <string2> // Case-Sensitive
+$ ./zstring <string1> -cm -i <string2> // Case-Insensitive
 
 ```
 
 * Concatenate two strings
 
-```c
+```console
 
-./zstring <string1> -cc <string2> 
+$ ./zstring <string1> -cc <string2> 
 
 ```
 
 * Find the number of words in a string
 
-```c
+```console
 
-./zstring <string> -n
+$ ./zstring <string> -n
 
 ```
 
 * Find the number of occurances of a characted in a string (Case-Sensitive and Case-Insensitive)
 
-```c
+```console
 
-./zstring <string> -o -s <charToFind> // Case-Sensitive
-./zstring <string> -o -i <charToFind> // Case-Insensitive
+$ ./zstring <string> -o -s <charToFind> // Case-Sensitive
+$ ./zstring <string> -o -i <charToFind> // Case-Insensitive
 
 ```
 * Chop a string from left or right and even by a specific size or a specific number of words
 
-```c
+```console
 
-./zstring <string> -cp -l -s <sizeToChop> // the flag -l indicates from left and the flag -s indicates by size 
-./zstring <string> -cp -l -w <numOfWordsToChop> // the flag -l indicates from left and the flag -w by number of words
+$ ./zstring <string> -cp -l -s <sizeToChop> // the flag -l indicates from left and the flag -s indicates by size 
+$ ./zstring <string> -cp -l -w <numOfWordsToChop> // the flag -l indicates from left and the flag -w by number of words
 
-./zstring <string> -cp -r -s <sizeToChop> // the flag -l indicates from right and the flag -s indicates by size 
-./zstring <string> -cp -r -w <numOfWordsToChop> // the flag -l indicates from right and the flag -w by number of words
+$ ./zstring <string> -cp -r -s <sizeToChop> // the flag -l indicates from right and the flag -s indicates by size 
+$ ./zstring <string> -cp -r -w <numOfWordsToChop> // the flag -l indicates from right and the flag -w by number of words
 
 ```
 
 * Convert a float to a rationalized String
 
-```c
+```console
 
-./zstring <float> -ra
+$ ./zstring <float> -ra
 
 ``` 
 
