@@ -212,7 +212,7 @@ bool compareStringCI(zstring str1, zstring str2);
     Create an empty zstring
     @result An Empty zString with a length of 0 
 */
-zstring newZNullString();
+zstring newZEmptyString();
 
 /*! 
     Create a new zstring with its data and its length.
@@ -626,10 +626,11 @@ bool compareStringCI(zstring str1, zstring str2){
 }
 
 /* Create an empty zstring */
-zstring newZNullString(){
+zstring newZEmptyString(){
     zstring result;
-    result.data = '\0';
-    result.length = 0;
+    result.length = 1;
+    result.data = malloc(sizeof(char));
+    result.data = " ";
     return result;
 }
 
