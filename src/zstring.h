@@ -343,6 +343,22 @@ zstring chopLeftByWordsNumb(zstring *str, size_t numOfWords);
 zstring chopRightByWordsNumb(zstring *str, size_t numOfWords);
 
 /*!
+    Chop the string from the left by a specified delimiter.
+    @param str The string to chop.
+    @param delim The delimiter used to chop the string.
+    @result The substring chopped off the the main string starting from left the by a certain delimiter
+*/
+zstring chopLeftByDelimiter(zstring *str, const char delim);
+
+/*!
+    Chop the string from the right by a specified delimiter.
+    @param str The string to chop.
+    @param delim The delimiter used to chop the string.
+    @result The substring chopped off the the main string starting from right the by a certain delimiter
+*/
+zstring chopRightByDelimiter(zstring *str, const char delim);
+
+/*!
     Convert a float to a rationalized string. 
     Function inspired from https://github.com/kevinboone/rationalize
     @param num The float to convert
@@ -680,6 +696,7 @@ zstring toLowercaseStr(zstring str){
         }
         i++;
     }
+
     lstr.data[i] = '\0';
     lstr.length = strlen(lstr.data);
     return lstr;
@@ -912,10 +929,10 @@ zstring chopLeftBySize(zstring *str, size_t size){
     }
 
     zstring result;
-    result.data = malloc(size);
+    result.data = malloc(size + 1);
     copyNStr(*str, result, size);
-    result.length = size;
     result.data[size] = '\0';
+    result.length = strlen(result.data);
 
     if(str->length - size == 0){
         str->length = 1;
@@ -946,11 +963,11 @@ zstring chopRightBySize(zstring *str, size_t size){
     }
 
     zstring result;
-    result.length = size;
-    result.data = malloc(size);
+    result.data = malloc(size + 1);
     copyNStr(*str, result, str->length);
     result.data += str->length - size;
-    result.data[result.length] = '\0';
+    result.data[size] = '\0';
+    result.length = strlen(result.data);
 
 
     if(str->length - size == 0){
@@ -1025,6 +1042,42 @@ zstring chopRightByWordsNumb(zstring *str, size_t numOfWords){
     
     return result;
 
+}
+
+/* Chop the string from the left by a specified delimiter.*/
+zstring chopLeftByDelimiter(zstring *str, const char delim){
+
+    if(isStringNull(*str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
+    size_t sz = 0;
+
+    while(!isNullTerminator(str->data[sz++]) && str->data[sz] != delim);
+    
+
+    zstring result = chopLeftBySize(str, sz);
+
+    return result;
+}
+
+
+/* Chop the string from the right by a specified delimiter.*/
+zstring chopRightByDelimiter(zstring *str, const char delim){
+
+    if(isStringNull(*str)){
+        fprintf(stderr, "Error! String is null\n");
+        exit(1);
+    }
+
+    size_t sz = 0;
+
+    while((str->length - sz) > 0 && str->data[sz++] != delim);
+
+    zstring result = chopRightBySize(str, sz);
+
+    return result;
 }
 
 /*

@@ -182,6 +182,11 @@ int main(int argc, char *argv[]){
                                 printf("Taken string '%s' and chopped the string to '%s' to length: %zu \n",choppedStr.data, str.data, str.length);
                                 freeZString(choppedStr);
                             break;
+                            case 'd':
+                                choppedStr = chopLeftByDelimiter(&str, argv[5][0]);
+                                printf("Taken string '%s' and chopped the string to '%s' to length: %zu \n",choppedStr.data, str.data, str.length);
+                                freeZString(choppedStr);
+                            break;
                             default: 
                             fprintf(stderr, "Error! Incorrect Arguments => Usage: %s <string1> -cp -l or - r -s or -w <size> or <numOfWords>\n", argv[0]);
                             exit(1);
@@ -198,6 +203,11 @@ int main(int argc, char *argv[]){
                             case 'w':
                                 choppedStr = chopRightByWordsNumb(&str, atoi(argv[5]));
                                 printf("Taken string '%s' and chopped the string to '%s'\n",choppedStr.data, str.data);
+                                freeZString(choppedStr);
+                            break;
+                            case 'd':
+                                choppedStr = chopRightByDelimiter(&str, argv[5][0]);
+                                printf("Taken string '%s' and chopped the string to '%s' to length: %zu \n",choppedStr.data, str.data, str.length);
                                 freeZString(choppedStr);
                             break;
                             default: 
