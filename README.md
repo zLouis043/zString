@@ -69,6 +69,7 @@ $ ./zstring <string> -re
 ```console
 
 $ ./zstring <string> -rw -s <wordToRemove> // Case-Sensitive
+
 $ ./zstring <string> -rw -i <wordToRemove> // Case-Insensitive
 
 ```
@@ -78,6 +79,7 @@ $ ./zstring <string> -rw -i <wordToRemove> // Case-Insensitive
 ```console
 
 $ ./zstring <string> -rc -s <charToRemove> // Case-Sensitive
+
 $ ./zstring <string> -rc -i <charToRemove> // Case-Insensitive
 
 ```
@@ -87,6 +89,7 @@ $ ./zstring <string> -rc -i <charToRemove> // Case-Insensitive
 ```console
 
 $ ./zstring <string1> -cm -s <string2> // Case-Sensitive
+
 $ ./zstring <string1> -cm -i <string2> // Case-Insensitive
 
 ```
@@ -112,18 +115,34 @@ $ ./zstring <string> -n
 ```console
 
 $ ./zstring <string> -o -s <charToFind> // Case-Sensitive
+
 $ ./zstring <string> -o -i <charToFind> // Case-Insensitive
 
 ```
-* Chop a string from left or right and even by a specific size or a specific number of words
+* Chop a string from left or right by a specific size
 
 ```console
 
-$ ./zstring <string> -cp -l -s <sizeToChop> // the flag -l indicates from left and the flag -s indicates by size 
-$ ./zstring <string> -cp -l -w <numOfWordsToChop> // the flag -l indicates from left and the flag -w by number of words
+$ ./zstring <string> -cp -l -s <sizeToChop> // the flag -l indicates from left and the flag -s indicates by size
+$ ./zstring <string> -cp -r -s <sizeToChop> // the flag -l indicates from right and the flag -s indicates by size
 
-$ ./zstring <string> -cp -r -s <sizeToChop> // the flag -l indicates from right and the flag -s indicates by size 
+```
+
+* Chop a string from left or right by a specific number of words  
+
+```console
+
+$ ./zstring <string> -cp -l -w <numOfWordsToChop> // the flag -l indicates from left and the flag -w by number of words
 $ ./zstring <string> -cp -r -w <numOfWordsToChop> // the flag -l indicates from right and the flag -w by number of words
+
+```
+
+* Chop a string from left or right by a delimiter 
+
+```console
+
+$ ./zstring <string> -cp -l -d <delimiter> // the flag -l indicated from left and the flag -d by the delimiter 
+$ ./zstring <string> -cp -r -d <delimiter> // the flag -r indicated from right and the flag -d by the delimiter 
 
 ```
 
