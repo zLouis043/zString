@@ -929,10 +929,9 @@ zstring chopLeftBySize(zstring *str, size_t size){
     }
 
     zstring result;
-    result.data = malloc(size + 1);
+    result.data = malloc(size+1);
     copyNStr(*str, result, size);
     result.data[size] = '\0';
-    result.length = strlen(result.data);
 
     if(str->length - size == 0){
         str->length = 1;
@@ -941,9 +940,9 @@ zstring chopLeftBySize(zstring *str, size_t size){
         return result;
     }
 
-    str->data = realloc(str->data, str->length - size); 
     str->data += size;
     str->length -= size;
+    str->data[str->length] = '\0';
 
     return result;
 
@@ -1000,15 +999,15 @@ zstring chopLeftByWordsNumb(zstring *str, size_t numOfWords){
 
     zstring result;
 
-    size_t n = 0; int sz = -1;
+    size_t n = 0; int sz = 0;
 
     while(!isNullTerminator(str->data[sz++]) && n < numOfWords){
         if(isSpace(str->data[sz]) && !isSpace(str->data[sz+1])) n++;
     }
 
-    sz--;
+    //sz--;
 
-    result = chopLeftBySize(str, sz);
+    result = chopLeftBySize(str, sz-1);
     
     return result;
 
@@ -1035,8 +1034,6 @@ zstring chopRightByWordsNumb(zstring *str, size_t numOfWords){
         sz++;
         if(!isSpace(str->data[str->length - sz]) && isSpace(str->data[str->length - sz - 1])) n++;
     }
-
-    printf("Size : %zu\n", sz);
 
     result = chopRightBySize(str, sz);
     
@@ -1073,7 +1070,7 @@ zstring chopRightByDelimiter(zstring *str, const char delim){
 
     size_t sz = 0;
 
-    while((str->length - sz) > 0 && str->data[sz++] != delim);
+    while((str->length - sz) > 0 && str->data[str->length - sz] != delim) sz++;
 
     zstring result = chopRightBySize(str, sz);
 
