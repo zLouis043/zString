@@ -1005,8 +1005,6 @@ zstring chopLeftByWordsNumb(zstring *str, size_t numOfWords){
         if(isSpace(str->data[sz]) && !isSpace(str->data[sz+1])) n++;
     }
 
-    //sz--;
-
     result = chopLeftBySize(str, sz-1);
     
     return result;
@@ -1051,8 +1049,7 @@ zstring chopLeftByDelimiter(zstring *str, const char delim){
 
     size_t sz = 0;
 
-    while(!isNullTerminator(str->data[sz++]) && str->data[sz] != delim);
-    
+    while(!isNullTerminator(str->data[sz++]) && str->data[sz] != delim); 
 
     zstring result = chopLeftBySize(str, sz);
 
