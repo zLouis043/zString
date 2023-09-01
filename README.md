@@ -22,11 +22,9 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ```console
 
-$ cd bin
-$ make 
-$ ./zstring <string>
- 
-Output> String: '<string>' of length <lenOfString>
+$ ./zstring
+
+Output > String: 'Hello World' of length 12
 
 ```
 
