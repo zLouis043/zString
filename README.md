@@ -20,9 +20,21 @@ Just add the zstring.h file to your project's headers and the include and define
 
 ### How to setup the test file
 
+For Windows:
+
 ```console
 
-$ ./zstring
+$ ./run.bat 
+
+Output > String: 'Hello World' of length 12
+
+```
+
+For Linux:
+
+```console
+
+$ ./run.sh
 
 Output > String: 'Hello World' of length 12
 
