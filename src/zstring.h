@@ -1175,7 +1175,15 @@ zstring rationalizeFloatToStr(double num, size_t order){
     if ( (( scale * n / d - orig_x ) > 0 ? ( scale * n / d - orig_x ) : -( scale * n / d - orig_x )) <= 1) break; 
     } 
 
-    zstring result = printz(10, "%c%d/%d", sign, n, d);
+    zstring result;
+
+    if(n == 0){
+        result = printz(10, "%c%d", '+', 0);
+    }else if(d == 1){
+        result = printz(10, "%c%d", sign, n);
+    }else {
+        result = printz(10, "%c%d/%d", sign, n, d);
+    }
     return result;
 }
 
